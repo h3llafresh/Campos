@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Campos">
 
         <activity
-            android:name=".presentation.view.main.MainActivity"
+            android:name=".presentation.view.login.LoginActivity"
             android:exported="true">
 
             <intent-filter>
@@ -21,6 +21,10 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".presentation.view.main.MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import by.vlfl.campos.databinding.FragmentSigninBinding
 
-class SignInFragment : Fragment() {
+class LoginFragment : Fragment() {
 
     private var _binding: FragmentSigninBinding? = null
     private val binding get() = _binding!!

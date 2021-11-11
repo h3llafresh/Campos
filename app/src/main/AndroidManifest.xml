@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Campos">
 
         <activity
-            android:name=".presentation.view.login.LoginActivity"
+            android:name=".presentation.view.signin.SignInActivity"
             android:exported="true">
 
             <intent-filter>

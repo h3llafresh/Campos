@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "115749634165",
+    "project_id": "campos-8600",
+    "storage_bucket": "campos-8600.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115749634165:android:edb0f482e1b4e1b28f783c",
+        "android_client_info": {
+          "package_name": "by.vlfl.campos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115749634165-j352bh4fjh3kt562kbidmgegr98asufj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAzWgOqiT7KQW17dMcVutMCs_DpZklTwg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115749634165-j352bh4fjh3kt562kbidmgegr98asufj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="by.vlfl.campos">
 
     <application
@@ -9,11 +10,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Campos">
+        android:theme="@style/Theme.AppTheme"
+        tools:ignore="LockedOrientationActivity">
 
         <activity
-            android:name=".presentation.view.signin.SignInActivity"
-            android:exported="true">
+            android:name=".presentation.view.splash.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppTheme.Launcher">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +27,14 @@
         </activity>
 
         <activity
+            android:name=".presentation.view.signIn.SignInActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".presentation.view.main.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -1,4 +1,4 @@
-package by.vlfl.campos.presentation.view.map
+package by.vlfl.campos.presentation.view.main.map
 
 import android.os.Bundle
 import android.view.LayoutInflater

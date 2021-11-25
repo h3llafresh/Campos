@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="by.vlfl.campos.presentation.view.profile.ProfileFragment"
+        android:name="by.vlfl.campos.presentation.view.main.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="by.vlfl.campos.presentation.view.map.MapFragment"
+        android:name="by.vlfl.campos.presentation.view.main.map.MapFragment"
         android:label="MapFragment"
         tools:layout="@layout/fragment_map" />
 

@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             setOnItemSelectedListener { item ->
                 return@setOnItemSelectedListener when (item.itemId) {
                     R.id.action_profile -> {
-                        mainNavController.navigate(by.vlfl.campos.NavGraphMainDirections.actionToProfileFragment())
+                        mainNavController.navigate(NavGraphMainDirections.actionToProfileFragment())
                         true
                     }
                     R.id.action_map -> {

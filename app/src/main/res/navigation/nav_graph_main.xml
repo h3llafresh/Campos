@@ -9,7 +9,13 @@
         android:id="@+id/profileFragment"
         android:name="by.vlfl.campos.presentation.view.main.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+
+        <argument
+            android:name="model"
+            app:argType="by.vlfl.campos.presentation.view.main.profile.ProfileModel" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/mapFragment"
@@ -17,8 +23,20 @@
         android:label="MapFragment"
         tools:layout="@layout/fragment_map" />
 
+    <fragment
+        android:id="@+id/playgroundFragment"
+        android:name="by.vlfl.campos.presentation.view.main.playground.PlaygroundFragment"
+        android:label="PlaygroundFragment"
+        tools:layout="@layout/fragment_playground">
+
+        <argument
+            android:name="model"
+            app:argType="by.vlfl.campos.presentation.view.main.playground.PlaygroundModel" />
+
+    </fragment>
+
     <action
-        android:id="@+id/action_to_profileFragment"
+        android:id="@+id/navigate_to_profileFragment"
         app:destination="@id/profileFragment"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
@@ -29,7 +47,7 @@
         app:popUpToInclusive="false" />
 
     <action
-        android:id="@+id/action_to_mapFragment"
+        android:id="@+id/navigate_to_mapFragment"
         app:destination="@id/mapFragment"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
@@ -38,5 +56,14 @@
         app:popExitAnim="@anim/nav_default_pop_exit_anim"
         app:popUpTo="@id/nav_graph_main"
         app:popUpToInclusive="false" />
+
+    <action
+        android:id="@+id/navigate_to_playgroundFragment"
+        app:destination="@id/playgroundFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="true"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
 </navigation>

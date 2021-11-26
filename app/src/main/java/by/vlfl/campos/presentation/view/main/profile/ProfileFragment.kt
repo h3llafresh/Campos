@@ -17,6 +17,8 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
+    //private val args: ProfileFragmentArgs by navArgs()
+
     @Inject
     lateinit var viewModel: ProfileViewModel
 
@@ -43,6 +45,7 @@ class ProfileFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
+       // setViewDataFromModel()
         observeViewModel()
     }
 
@@ -60,4 +63,12 @@ class ProfileFragment : Fragment() {
                 }
         })
     }
+
+//    private fun setViewDataFromModel() {
+//        val model = args.model
+//        with(binding) {
+//            tvUserName.text = model.name
+//            tvUserBirthDate.text = model.birthDate
+//        }
+//    }
 }

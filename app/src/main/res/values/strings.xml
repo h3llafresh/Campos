@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">Campos</string>
 
-<!--Bottom menu-->
+    <!--Bottom menu-->
     <string name="bottom_menu_profile_title">Profile</string>
     <string name="bottom_menu_map_title">Map</string>
+
+    <!--fragment_playground.xml-->
+    <string name="fragment_playground_button_in_label">I\'m in !</string>
+    <string name="fragment_playground_currently_there_label">currently there</string>
+
+    <!--fragment_profile.xml-->
+    <string name="fragment_profile_button_log_out_label">log\nout</string>
+    <string name="fragment_profile_campos_athlete_label"><u>Campos Athlete</u></string>
 
 </resources>

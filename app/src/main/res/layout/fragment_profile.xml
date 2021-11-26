@@ -12,10 +12,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent" >
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
@@ -28,6 +28,32 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Andy Human" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_user_birth_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/raleway"
+            android:gravity="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_name"
+            tools:text="26.12.2000" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_campos_athlete_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/raleway"
+            android:gravity="center"
+            android:text="@string/fragment_profile_campos_athlete_label"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_birth_date" />
+
         <com.google.android.material.button.MaterialButton
             android:layout_width="95dp"
             android:layout_height="70dp"
@@ -35,7 +61,7 @@
             android:backgroundTint="@color/white"
             android:drawableEnd="@drawable/ic_log_out"
             android:onClick="@{() -> vm.logOut()}"
-            android:text="log\nout"
+            android:text="@string/fragment_profile_button_log_out_label"
             android:textColor="@color/gray_600"
             android:textSize="12sp"
             app:cornerRadius="30dp"

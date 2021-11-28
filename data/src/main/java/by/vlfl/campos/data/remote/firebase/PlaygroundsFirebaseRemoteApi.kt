@@ -38,7 +38,7 @@ class PlaygroundsFirebaseRemoteApi @Inject constructor() {
                             val playgroundInfo = playgroundSnapshot.getValue<Playground>()
                             if (playgroundInfo != null) {
                                 playgroundsDataFlow.emit(playgroundInfo)
-                                Log.d("Data", playgroundInfo.toString())
+                                Log.d("Playgrounds Data", playgroundInfo.toString())
                             }
                         }
                     }

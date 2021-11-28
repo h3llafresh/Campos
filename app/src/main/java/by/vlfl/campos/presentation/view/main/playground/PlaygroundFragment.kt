@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentPlaygroundBinding
@@ -19,11 +20,15 @@ class PlaygroundFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var viewModel: PlaygroundViewModel
+    lateinit var factory: PlaygroundViewModel.Factory.AssistedInjectFactory
+
+    private val viewModel: PlaygroundViewModel by viewModels {
+        factory.create(args.model)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        requireActivity().appComponent.mainComponent().build().inject(this)
+        context.appComponent.mainComponent().build().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -37,11 +42,10 @@ class PlaygroundFragment : Fragment() {
     }
 
     private fun setViewDataFromModel() {
-        val model = args.model
         with(binding) {
-            tvPlaygroundName.text = model.name
-            tvPlaygroundAddress.text = model.address
-            tvPlaygroundCategory.text = model.category
+            tvPlaygroundName.text = viewModel.model.name
+            tvPlaygroundAddress.text = viewModel.model.address
+            tvPlaygroundCategory.text = viewModel.model.category
         }
     }
 }

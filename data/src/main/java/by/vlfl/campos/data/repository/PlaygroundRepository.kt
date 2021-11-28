@@ -11,5 +11,4 @@ class PlaygroundRepository @Inject constructor(
 ): IPlaygroundRepository {
 
     override suspend fun getPlaygrounds(): SharedFlow<Playground> = playgroundsFirebaseRemoteApi.subscribeToPlaygroundsDataChangeEvent()
-
 }

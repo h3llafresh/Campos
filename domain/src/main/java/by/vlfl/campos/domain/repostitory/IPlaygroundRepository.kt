@@ -1,7 +1,8 @@
 package by.vlfl.campos.domain.repostitory
 
 import by.vlfl.campos.domain.entity.Playground
+import kotlinx.coroutines.flow.SharedFlow
 
 interface IPlaygroundRepository {
-    fun getPlaygrounds(): List<Playground>
+    suspend fun getPlaygrounds(): SharedFlow<Playground>
 }

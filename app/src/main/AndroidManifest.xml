@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="by.vlfl.campos">
 
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE"/>
+
     <application
         android:name=".MainApp"
         android:allowBackup="false"

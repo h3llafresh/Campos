@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             setOnItemSelectedListener { item ->
                 return@setOnItemSelectedListener when (item.itemId) {
                     R.id.action_profile -> {
-                        mainNavController.navigate(NavGraphMainDirections.navigateToProfileFragment(model!!))
+                        mainNavController.navigate(NavGraphMainDirections.navigateToProfileFragment())
                         true
                     }
                     R.id.action_map -> {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.vlfl.campos.NavGraphMainDirections
 import by.vlfl.campos.R
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 class MapFragment : Fragment() {
@@ -47,12 +49,6 @@ class MapFragment : Fragment() {
 
         mapView = binding.gMapPlaygroundsMap
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.getDataFromDb()
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -142,11 +138,12 @@ class MapFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.updateMapEvent.observe(viewLifecycleOwner, { playgrounds ->
-            playgrounds.forEach {
-                setupMarkerPosition(googleMap, it)
-            }
-        })
+        lifecycleScope.launchWhenStarted {
+            viewModel.playgrounds
+                .collect { playground ->
+                    setupMarkerPosition(googleMap, playground)
+                }
+        }
     }
 
     private fun setupMarkerClickListener() {

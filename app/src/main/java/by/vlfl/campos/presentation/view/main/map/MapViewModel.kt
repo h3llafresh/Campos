@@ -1,49 +1,26 @@
 package by.vlfl.campos.presentation.view.main.map
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import by.vlfl.campos.domain.entity.Playground
-import by.vlfl.campos.lifecycle.SingleLiveEvent
-import by.vlfl.campos.lifecycle.emit
-import by.vlfl.campos.lifecycle.emptySingleLiveEvent
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
+import by.vlfl.campos.domain.usecase.GetPlaygroundsUseCase
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MapViewModel @Inject constructor() : ViewModel() {
+class MapViewModel @Inject constructor(private val getPlaygroundsUseCase: GetPlaygroundsUseCase) : ViewModel() {
 
-    @Inject
-    lateinit var playgroundsReference: DatabaseReference
+    private val _playgrounds = MutableSharedFlow<Playground>(replay = 1, onBufferOverflow = BufferOverflow.SUSPEND)
+    val playgrounds: SharedFlow<Playground> = _playgrounds.asSharedFlow()
 
-    val playgrounds :MutableList<Playground> = mutableListOf()
-
-    private val _updateMapEvent: SingleLiveEvent<List<Playground>> = emptySingleLiveEvent()
-    val updateMapEvent: LiveData<List<Playground>> get() = _updateMapEvent
-
-    private val postListener = object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            for (playgroundSnapshot in snapshot.children) {
-                val post = playgroundSnapshot.getValue<Playground>()
-                if (post != null) {
-                    playgrounds.add(post)
-                    Log.d("Data", playgrounds.joinToString())
-                }
-            }
-            _updateMapEvent.emit(playgrounds)
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-            Log.w("MapViewModel", error.toException())
+    init {
+        viewModelScope.launch {
+            _playgrounds.emitAll(getPlaygroundsUseCase())
         }
     }
-
-    fun getDataFromDb() {
-        playgroundsReference.addValueEventListener(postListener)
-    }
-
 
 }

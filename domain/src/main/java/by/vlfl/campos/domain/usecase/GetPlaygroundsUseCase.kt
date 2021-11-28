@@ -2,11 +2,10 @@ package by.vlfl.campos.domain.usecase
 
 import by.vlfl.campos.domain.entity.Playground
 import by.vlfl.campos.domain.repostitory.IPlaygroundRepository
+import kotlinx.coroutines.flow.SharedFlow
 
-class GetPlaygroundsUseCase(
+class GetPlaygroundsUseCase (
     private val playgroundRepository: IPlaygroundRepository
 ) {
-    operator fun invoke(): List<Playground> {
-        return playgroundRepository.getPlaygrounds()
-    }
+    suspend operator fun invoke(): SharedFlow<Playground> = playgroundRepository.getPlaygrounds()
 }

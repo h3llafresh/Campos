@@ -2,6 +2,7 @@ package by.vlfl.campos.di.module
 
 import by.vlfl.campos.utils.Constants.FIREBASE_DATABASE_PLAYGROUNDS_REFERENCE
 import by.vlfl.campos.utils.Constants.FIREBASE_DATABASE_REFERENCE
+import by.vlfl.campos.utils.Constants.FIREBASE_DATABASE_USERS_REFERENCE
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -20,5 +21,12 @@ class NetworkModule {
     @Singleton
     @Provides
     @Named("Playgrounds")
-    fun providePlaygroundsRemoteReference(firebaseDatabase: FirebaseDatabase): DatabaseReference = firebaseDatabase.getReference(FIREBASE_DATABASE_PLAYGROUNDS_REFERENCE)
+    fun providePlaygroundsRemoteReference(firebaseDatabase: FirebaseDatabase): DatabaseReference =
+        firebaseDatabase.getReference(FIREBASE_DATABASE_PLAYGROUNDS_REFERENCE)
+
+    @Singleton
+    @Provides
+    @Named("Users")
+    fun provideUsersRemoteReference(firebaseDatabase: FirebaseDatabase): DatabaseReference =
+        firebaseDatabase.getReference(FIREBASE_DATABASE_USERS_REFERENCE)
 }

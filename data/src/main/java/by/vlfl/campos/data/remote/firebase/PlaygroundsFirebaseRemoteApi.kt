@@ -45,7 +45,7 @@ class PlaygroundsFirebaseRemoteApi @Inject constructor() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.w("MapViewModel", error.toException())
+                    Log.w("PlaygroundsDataChange", error.toException())
                 }
             }
         )

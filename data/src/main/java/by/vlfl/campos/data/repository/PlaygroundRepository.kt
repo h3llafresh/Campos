@@ -4,11 +4,8 @@ import by.vlfl.campos.data.remote.firebase.PlaygroundsFirebaseRemoteApi
 import by.vlfl.campos.domain.entity.Playground
 import by.vlfl.campos.domain.repostitory.IPlaygroundRepository
 import kotlinx.coroutines.flow.SharedFlow
-import javax.inject.Inject
 
-class PlaygroundRepository @Inject constructor(
-    private val playgroundsFirebaseRemoteApi: PlaygroundsFirebaseRemoteApi
-): IPlaygroundRepository {
+class PlaygroundRepository(private val playgroundsFirebaseRemoteApi: PlaygroundsFirebaseRemoteApi) : IPlaygroundRepository {
 
     override suspend fun getPlaygrounds(): SharedFlow<Playground> = playgroundsFirebaseRemoteApi.subscribeToPlaygroundsDataChangeEvent()
 }

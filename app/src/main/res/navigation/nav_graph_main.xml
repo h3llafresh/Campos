@@ -11,9 +11,9 @@
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" >
 
-<!--        <argument-->
-<!--            android:name="model"-->
-<!--            app:argType="by.vlfl.campos.presentation.view.main.profile.ProfileModel" />-->
+        <argument
+            android:name="model"
+            app:argType="by.vlfl.campos.presentation.view.main.profile.ProfileModel" />
 
     </fragment>
 

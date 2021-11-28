@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentProfileBinding
 import by.vlfl.campos.presentation.view.signIn.SignInActivity
@@ -17,7 +18,7 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    //private val args: ProfileFragmentArgs by navArgs()
+    private val args: ProfileFragmentArgs by navArgs()
 
     @Inject
     lateinit var viewModel: ProfileViewModel
@@ -45,7 +46,7 @@ class ProfileFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-       // setViewDataFromModel()
+        setViewDataFromModel()
         observeViewModel()
     }
 
@@ -64,11 +65,11 @@ class ProfileFragment : Fragment() {
         })
     }
 
-//    private fun setViewDataFromModel() {
-//        val model = args.model
-//        with(binding) {
-//            tvUserName.text = model.name
-//            tvUserBirthDate.text = model.birthDate
-//        }
-//    }
+    private fun setViewDataFromModel() {
+        val model = args.model
+        with(binding) {
+            tvUserName.text = model.name
+            tvUserBirthDate.text = model.birthDate
+        }
+    }
 }

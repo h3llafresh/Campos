@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -18,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
-    private val model by lazy { intent.getParcelableExtra<ProfileModel>(PROFILE_MODEL_KEY) }
+    private val profileModel by lazy { intent.extras?.getParcelable<ProfileModel>(PROFILE_MODEL_KEY) }
 
     private lateinit var mainNavController: NavController
 
@@ -35,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavController() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_nav_host_main) as NavHostFragment
         mainNavController = navHostFragment.navController
+        mainNavController.setGraph(R.navigation.nav_graph_main, intent.extras)
     }
 
     private fun setupBottomNavigation() {
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             setOnItemSelectedListener { item ->
                 return@setOnItemSelectedListener when (item.itemId) {
                     R.id.action_profile -> {
-                        mainNavController.navigate(NavGraphMainDirections.navigateToProfileFragment())
+                        mainNavController.navigate(NavGraphMainDirections.navigateToProfileFragment(profileModel!!))
                         true
                     }
                     R.id.action_map -> {
@@ -60,10 +60,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val PROFILE_MODEL_KEY = "PROFILE_MODEL"
+        const val PROFILE_MODEL_KEY = "model"
 
         fun create(context: Context, model: ProfileModel): Intent = Intent(context, MainActivity::class.java).apply {
-            putExtras(bundleOf(PROFILE_MODEL_KEY to model))
+            putExtra(PROFILE_MODEL_KEY, model)
         }
     }
 }

@@ -2,16 +2,13 @@ package by.vlfl.campos.di
 
 import android.content.Context
 import by.vlfl.campos.MainApp
-import by.vlfl.campos.di.module.AppModule
-import by.vlfl.campos.di.module.NetworkModule
-import by.vlfl.campos.di.module.PlaygroundModule
-import by.vlfl.campos.di.module.StorageModule
+import by.vlfl.campos.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, StorageModule::class, NetworkModule::class, PlaygroundModule::class])
+@Component(modules = [AppModule::class, StorageModule::class, NetworkModule::class, PlaygroundModule::class, UserModule::class])
 interface AppComponent  {
 
     @Component.Factory
@@ -21,4 +18,5 @@ interface AppComponent  {
 
     fun inject(application: MainApp)
     fun mainComponent(): MainComponent.Builder
+    fun splashComponent(): SplashComponent.Builder
 }

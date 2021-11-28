@@ -1,6 +1,5 @@
 package by.vlfl.campos.presentation.view.main.map
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -31,7 +30,6 @@ class MapViewModel(getPlaygroundsUseCase: GetPlaygroundsUseCase) : ViewModel() {
         @Suppress("UNCHECKED_CAST")
         override fun <T: ViewModel?> create(modelClass: Class<T>): T {
             require(modelClass == MapViewModel::class.java)
-            Log.d("MapViewModel", "Creating VM")
             return MapViewModel(getPlaygroundsUseCase) as T
         }
     }

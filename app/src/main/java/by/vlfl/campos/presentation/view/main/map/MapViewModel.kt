@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class MapViewModel(getPlaygroundsUseCase: GetPlaygroundsUseCase) : ViewModel() {
 
-    private val _playgrounds = MutableSharedFlow<Playground>(replay = 10, onBufferOverflow = BufferOverflow.DROP_LATEST)
+    private val _playgrounds = MutableSharedFlow<Playground>(replay = CACHED_OBJECTS_NUMBER, onBufferOverflow = BufferOverflow.DROP_LATEST)
     val playgrounds: SharedFlow<Playground> = _playgrounds.asSharedFlow()
 
     init {
@@ -34,4 +34,7 @@ class MapViewModel(getPlaygroundsUseCase: GetPlaygroundsUseCase) : ViewModel() {
         }
     }
 
+    companion object {
+        private const val CACHED_OBJECTS_NUMBER = 10
+    }
 }

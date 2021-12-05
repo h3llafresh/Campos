@@ -11,8 +11,7 @@ data class PlaygroundModel(
     val name: String? = "",
     val address: String? = "",
     val category: String? = "",
-    val coordinates: LatLng? = null,
-    val activePlayers: HashMap<String, Boolean>? = null
+    val coordinates: LatLng? = null
 ) : Parcelable {
     companion object {
         fun fromDomainModel(playground: Playground): PlaygroundModel {
@@ -23,7 +22,6 @@ data class PlaygroundModel(
                     address = address,
                     category = category,
                     coordinates = LatLng(coordinates!!.latitude!!, coordinates!!.longitude!!),
-                    activePlayers = activePlayers
                 )
             }
         }

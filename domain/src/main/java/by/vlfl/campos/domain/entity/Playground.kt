@@ -5,6 +5,5 @@ data class Playground(
     val name: String? = "",
     val category: String? = "",
     val address: String? = "",
-    val coordinates: Coordinates ?= null,
-    val activePlayers: HashMap<String, Boolean> ?= null
+    val coordinates: Coordinates ?= null
 )

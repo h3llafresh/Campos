@@ -7,9 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentPlaygroundBinding
+import by.vlfl.campos.presentation.view.main.playground.adapter.ActivePlayersAdapter
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 class PlaygroundFragment : Fragment() {
@@ -18,6 +22,8 @@ class PlaygroundFragment : Fragment() {
 
     private var _binding: FragmentPlaygroundBinding? = null
     private val binding get() = _binding!!
+
+    private var activePlayersAdapter: ActivePlayersAdapter? = null
 
     @Inject
     lateinit var factory: PlaygroundViewModel.Factory.AssistedInjectFactory
@@ -39,6 +45,22 @@ class PlaygroundFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViewDataFromModel()
+        setupActivePlayersRecyclerView()
+
+        observeViewModel()
+    }
+
+    private fun setupActivePlayersRecyclerView() {
+        activePlayersAdapter = ActivePlayersAdapter()
+        with(binding.rvUsersOnPlayground) {
+            adapter = activePlayersAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
     }
 
     private fun setViewDataFromModel() {
@@ -46,6 +68,14 @@ class PlaygroundFragment : Fragment() {
             tvPlaygroundName.text = viewModel.model.name
             tvPlaygroundAddress.text = viewModel.model.address
             tvPlaygroundCategory.text = viewModel.model.category
+        }
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.activePlayers.collect { activePlayers ->
+                activePlayersAdapter?.replace(activePlayers)
+            }
         }
     }
 }

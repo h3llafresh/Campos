@@ -76,12 +76,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/b_im_in"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_currently_there_label"
             app:layout_constraintVertical_bias="0"
-            app:layout_constraintVertical_chainStyle="spread_inside" />
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            tools:itemCount="3"
+            tools:listitem="@layout/active_player_item" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/b_im_in"

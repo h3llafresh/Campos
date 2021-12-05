@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="by.vlfl.campos">
 
-    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
 
     <application
         android:name=".MainApp"
@@ -42,6 +43,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -1,10 +1,15 @@
 package by.vlfl.campos.presentation.view.main.map
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +21,8 @@ import by.vlfl.campos.databinding.FragmentMapBinding
 import by.vlfl.campos.domain.entity.Playground
 import by.vlfl.campos.presentation.view.main.playground.PlaygroundModel
 import by.vlfl.campos.utils.BitmapHelper
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -25,13 +32,16 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
-class MapFragment : Fragment() {
+class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
 
     private var mapView: MapView? = null
+
     private var _googleMap: GoogleMap? = null
     private val googleMap: GoogleMap get() = _googleMap!!
+
+    private var fusedLocationClient: FusedLocationProviderClient? = null
 
     @Inject
     lateinit var factory: MapViewModel.Factory
@@ -40,7 +50,6 @@ class MapFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         context.appComponent.mainComponent().build().inject(this)
     }
 
@@ -48,6 +57,7 @@ class MapFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentMapBinding.inflate(inflater, container, false)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         mapView = binding.gMapPlaygroundsMap
         return binding.root
     }
@@ -106,11 +116,21 @@ class MapFragment : Fragment() {
     private fun setupMap() {
         binding.gMapPlaygroundsMap.getMapAsync { map ->
             _googleMap = map
-            googleMap.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.campos_map_style)
-            )
+            with(googleMap) {
+                setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.campos_map_style)
+                )
+                enableCurrentLocation()
+                showDeviceLocation()
+            }
+
             observeViewModel()
         }
+    }
+
+    override fun onMyLocationButtonClick(): Boolean {
+        showDeviceLocation()
+        return false
     }
 
     private fun setupMarkerPosition(map: GoogleMap, playground: Playground) {
@@ -118,7 +138,6 @@ class MapFragment : Fragment() {
         val markerPosition = LatLng(playground.coordinates?.latitude!!, playground.coordinates?.longitude!!)
 
         with(map) {
-            moveCamera(CameraUpdateFactory.newLatLngZoom(markerPosition, MAP_ZOOM_LEVEL))
             addMarker(
                 MarkerOptions()
                     .title(playground.name)
@@ -156,6 +175,34 @@ class MapFragment : Fragment() {
                     )
                 )
             true
+        }
+    }
+
+    private fun checkLocationPermissionGranted(): Boolean {
+        return ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun enableCurrentLocation() {
+        if (checkLocationPermissionGranted()) {
+            googleMap.isMyLocationEnabled = true
+            googleMap.uiSettings.isMyLocationButtonEnabled = true
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun showDeviceLocation() {
+        try {
+            if (checkLocationPermissionGranted()) {
+                fusedLocationClient?.lastLocation?.addOnSuccessListener { location ->
+                    if (location != null) {
+                        val locationCoordinates = LatLng(location.latitude, location.longitude)
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, MAP_ZOOM_LEVEL))
+                    }
+                }
+            }
+        } catch (e: SecurityException) {
+            Log.e("Location exception: %s", e.message, e)
         }
     }
 

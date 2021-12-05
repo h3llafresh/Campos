@@ -7,10 +7,13 @@ buildscript {
 
         //App dependencies
         kotlin_version = '1.7.0'
+        activity_version = '1.4.0'
         app_compat_version = '1.4.0'
         coroutines_version = '1.5.1'
         dagger_version = '2.40'
+        fragment_version = '1.4.0'
         material_version = '1.4.0'
+        maps_version = '18.0.0'
         nav_version = '2.3.5'
     }
 

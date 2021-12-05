@@ -13,4 +13,10 @@
     <string name="fragment_profile_button_log_out_label">log\nout</string>
     <string name="fragment_profile_campos_athlete_label"><u>Campos Athlete</u></string>
 
+    <!--PermissionDeniedDialog-->
+    <string name="permission_denied_dialog__permission_required_message">
+        Oops! Sorry, playgrounds won\'t work without location data. Please provide location access permission in settings
+    </string>
+    <string name="permission_denied_dialog__positive_button_text">OK</string>
+
 </resources>

@@ -35,6 +35,7 @@ class SplashActivity : AppCompatActivity() {
     private fun observeViewModel(){
         viewModel.navigateToMainActivityEvent.observe(this, { profileModel ->
             startActivity(MainActivity.create(this, profileModel))
+            finish()
         })
     }
 

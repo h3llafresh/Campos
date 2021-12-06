@@ -10,4 +10,7 @@ import javax.inject.Singleton
 class UserRepository @Inject constructor(private val usersFirebaseRemoteApi: UsersFirebaseRemoteApi) : IUserRepository {
     override suspend fun getUserData(userID: String): User =
         usersFirebaseRemoteApi.getUserData(userID)
+
+    override suspend fun checkInCurrentUser(userID: String, playgroundID: String, playgroundName: String) =
+        usersFirebaseRemoteApi.checkInCurrentUser(userID, playgroundID, playgroundName)
 }

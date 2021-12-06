@@ -96,6 +96,7 @@
             android:text="@string/fragment_playground_button_in_label"
             android:textColor="@color/gray_600"
             android:textSize="16sp"
+            android:onClick="@{() -> vm.checkInCurrentUser()}"
             app:cornerRadius="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

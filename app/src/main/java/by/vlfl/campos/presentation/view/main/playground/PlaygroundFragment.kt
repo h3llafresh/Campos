@@ -44,6 +44,12 @@ class PlaygroundFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        with(binding) {
+            vm = viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
+
         setViewDataFromModel()
         setupActivePlayersRecyclerView()
 

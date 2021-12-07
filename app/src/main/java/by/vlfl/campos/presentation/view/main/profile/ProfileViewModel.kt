@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import by.vlfl.campos.domain.entity.Playground
 import by.vlfl.campos.domain.usecase.GetUserCurrentPlayground
+import by.vlfl.campos.domain.usecase.LeaveCurrentGameUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
 import by.vlfl.campos.lifecycle.emptySingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -17,13 +19,14 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProfileViewModel(getUserCurrentPlayground: GetUserCurrentPlayground) : ViewModel() {
+class ProfileViewModel(getUserCurrentPlayground: GetUserCurrentPlayground, private val leaveCurrentGameUseCase: LeaveCurrentGameUseCase) :
+    ViewModel() {
 
     private val _logoutEvent: SingleLiveEvent<Nothing> = emptySingleLiveEvent()
     val logoutEvent: LiveData<Nothing>
         get() = _logoutEvent
 
-    private val _currentPlayground = MutableSharedFlow<Playground?>()
+    private val _currentPlayground = MutableSharedFlow<Playground?>(replay = CACHED_OBJECTS_NUMBER, onBufferOverflow = BufferOverflow.DROP_LATEST)
     val currentPlayground: SharedFlow<Playground?> = _currentPlayground.asSharedFlow()
 
     init {
@@ -39,13 +42,28 @@ class ProfileViewModel(getUserCurrentPlayground: GetUserCurrentPlayground) : Vie
 
     fun logOut() = _logoutEvent.emit()
 
+    fun leaveCurrentGame() {
+        val userID = FirebaseAuth.getInstance().currentUser?.uid
+        val playgroundID = currentPlayground.replayCache.first()?.id
+        if (userID != null && playgroundID != null) {
+            viewModelScope.launch {
+                leaveCurrentGameUseCase(userID, playgroundID)
+            }
+        }
+    }
+
     class Factory @Inject constructor(
-        private val getUserCurrentPlayground: GetUserCurrentPlayground
+        private val getUserCurrentPlayground: GetUserCurrentPlayground,
+        private val leaveCurrentGame: LeaveCurrentGameUseCase,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             require(modelClass == ProfileViewModel::class.java)
-            return ProfileViewModel(getUserCurrentPlayground) as T
+            return ProfileViewModel(getUserCurrentPlayground, leaveCurrentGame) as T
         }
+    }
+
+    companion object {
+        private const val CACHED_OBJECTS_NUMBER = 1
     }
 }

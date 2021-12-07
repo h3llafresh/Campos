@@ -17,4 +17,8 @@ class UserRepository @Inject constructor(private val usersFirebaseRemoteApi: Use
         usersFirebaseRemoteApi.checkInCurrentUser(userID, playgroundID, playgroundName)
 
     override suspend fun getUserCurrentPlayground(userID: String): Flow<Playground?> = usersFirebaseRemoteApi.subscribeToUserCurrentPlayground(userID)
+
+    override suspend fun leaveCurrentGame(userID: String, playgroundID: String) {
+        usersFirebaseRemoteApi.leaveCurrentGame(userID, playgroundID)
+    }
 }

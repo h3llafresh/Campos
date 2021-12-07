@@ -79,10 +79,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_current_playground_title"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_no_active_plays"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginHorizontal="16dp"
+            android:text="You are currently not playing anywhere. \nGo to map and find someone to play with!"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/b_log_out"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_campos_athlete_title" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/b_leave_game"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/white"
+            android:onClick="@{() -> vm.leaveCurrentGame()}"
+            android:text="Leave the game"
+            android:textColor="@color/gray_600"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:cornerRadius="30dp"
+            app:layout_constraintBottom_toTopOf="@id/b_log_out"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/b_log_out"
             android:layout_width="95dp"
             android:layout_height="70dp"
             android:layout_marginBottom="48dp"

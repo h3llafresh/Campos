@@ -6,6 +6,7 @@ import by.vlfl.campos.domain.repostitory.IUserRepository
 import by.vlfl.campos.domain.usecase.CheckInCurrentUserUseCase
 import by.vlfl.campos.domain.usecase.GetUserCurrentPlayground
 import by.vlfl.campos.domain.usecase.GetUserProfileDataUseCase
+import by.vlfl.campos.domain.usecase.LeaveCurrentGameUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -28,4 +29,8 @@ class UserModule {
     @Provides
     fun provideCheckInCurrentUserUseCase(repository: IUserRepository): CheckInCurrentUserUseCase =
         CheckInCurrentUserUseCase(repository)
+
+    @Provides
+    fun provideLeaveCurrentGameUserUseCase(repository: IUserRepository): LeaveCurrentGameUseCase =
+        LeaveCurrentGameUseCase(repository)
 }

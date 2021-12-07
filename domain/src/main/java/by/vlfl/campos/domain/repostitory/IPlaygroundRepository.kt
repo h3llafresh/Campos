@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.SharedFlow
 interface IPlaygroundRepository {
     suspend fun getPlaygrounds(): SharedFlow<Playground>
 
-    suspend fun getActivePlayers(playgroundId: String): SharedFlow<List<User>>
+    suspend fun getActivePlayers(playgroundID: String): SharedFlow<List<User>>
 }

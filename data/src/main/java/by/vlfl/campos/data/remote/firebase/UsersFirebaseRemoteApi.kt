@@ -64,7 +64,7 @@ class UsersFirebaseRemoteApi @Inject constructor() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     CoroutineScope(Dispatchers.IO).launch {
                         for (playgroundSnapshot in snapshot.children) {
-                            val currentPlayground = playgroundSnapshot.getValue<Playground>()?.copy(id = snapshot.key)
+                            val currentPlayground = playgroundSnapshot.getValue<Playground>()?.copy(id = playgroundSnapshot.key)
                             userCurrentPlaygroundDataFlow.emit(currentPlayground)
                             Log.d("User playground data", currentPlayground.toString())
                         }
@@ -76,5 +76,10 @@ class UsersFirebaseRemoteApi @Inject constructor() {
                 }
             }
         )
+    }
+
+    fun leaveCurrentGame(userID: String, playgroundID: String) {
+        usersRemoteReference.child(userID).child("currentPlayground").child(playgroundID).child("name").setValue("")
+        playgroundsRemoteReference.child(playgroundID).child("activePlayers").child(userID).child("name").setValue("")
     }
 }

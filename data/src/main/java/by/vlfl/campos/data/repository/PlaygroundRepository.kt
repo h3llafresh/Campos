@@ -10,6 +10,6 @@ class PlaygroundRepository(private val playgroundsFirebaseRemoteApi: Playgrounds
 
     override suspend fun getPlaygrounds(): SharedFlow<Playground> = playgroundsFirebaseRemoteApi.subscribeToPlaygroundsDataChangeEvent()
 
-    override suspend fun getActivePlayers(playgroundId: String): SharedFlow<List<User>> =
-        playgroundsFirebaseRemoteApi.subscribeToActivePlayersDataChangeEvent(playgroundId)
+    override suspend fun getActivePlayers(playgroundID: String): SharedFlow<List<User>> =
+        playgroundsFirebaseRemoteApi.subscribeToActivePlayersDataChangeEvent(playgroundID)
 }

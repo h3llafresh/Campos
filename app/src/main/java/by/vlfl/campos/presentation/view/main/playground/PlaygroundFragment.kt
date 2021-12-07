@@ -80,7 +80,7 @@ class PlaygroundFragment : Fragment() {
     private fun observeViewModel() {
         lifecycleScope.launchWhenStarted {
             viewModel.activePlayers.collect { activePlayers ->
-                activePlayersAdapter?.replace(activePlayers)
+                activePlayersAdapter?.replace(activePlayers.filter { it.name != "" })
             }
         }
     }

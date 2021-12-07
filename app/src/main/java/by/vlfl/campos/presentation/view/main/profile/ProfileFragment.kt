@@ -76,8 +76,10 @@ class ProfileFragment : Fragment() {
                 .collect { playground ->
                     if (playground != null && !playground.name.isNullOrEmpty()) {
                         setCurrentPlayground(playground)
+                        binding.bLeaveGame.isVisible = true
                     } else {
                         clearCurrentPlayground()
+                        binding.bLeaveGame.isVisible = false
                     }
                 }
         }
@@ -89,6 +91,7 @@ class ProfileFragment : Fragment() {
                 tvCurrentPlaygroundTitle.isVisible = true
                 tvCurrentPlayground.isVisible = true
             }
+            tvNoActivePlays.isVisible = false
             tvCurrentPlayground.text = playground.name
         }
     }
@@ -98,6 +101,7 @@ class ProfileFragment : Fragment() {
             if (tvCurrentPlaygroundTitle.isVisible) {
                 tvCurrentPlaygroundTitle.isVisible = false
                 tvCurrentPlayground.isVisible = false
+                tvNoActivePlays.isVisible = true
             }
         }
     }

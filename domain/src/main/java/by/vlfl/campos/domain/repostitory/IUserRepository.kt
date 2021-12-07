@@ -10,4 +10,6 @@ interface IUserRepository {
     suspend fun checkInCurrentUser(userID: String, playgroundID: String, playgroundName: String)
 
     suspend fun getUserCurrentPlayground(userID: String): Flow<Playground?>
+
+    suspend fun leaveCurrentGame(userID: String, playgroundID: String)
 }

@@ -6,12 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentProfileBinding
+import by.vlfl.campos.domain.entity.Playground
 import by.vlfl.campos.presentation.view.signIn.SignInActivity
 import com.firebase.ui.auth.AuthUI
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 class ProfileFragment : Fragment() {
@@ -21,7 +26,9 @@ class ProfileFragment : Fragment() {
     private val args: ProfileFragmentArgs by navArgs()
 
     @Inject
-    lateinit var viewModel: ProfileViewModel
+    lateinit var factory: ProfileViewModel.Factory
+
+    private val viewModel: ProfileViewModel by viewModels { factory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -63,6 +70,36 @@ class ProfileFragment : Fragment() {
                     activity?.finish()
                 }
         })
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.currentPlayground
+                .collect { playground ->
+                    if (playground != null && !playground.name.isNullOrEmpty()) {
+                        setCurrentPlayground(playground)
+                    } else {
+                        clearCurrentPlayground()
+                    }
+                }
+        }
+    }
+
+    private fun setCurrentPlayground(playground: Playground) {
+        with(binding) {
+            if (!tvCurrentPlaygroundTitle.isVisible) {
+                tvCurrentPlaygroundTitle.isVisible = true
+                tvCurrentPlayground.isVisible = true
+            }
+            tvCurrentPlayground.text = playground.name
+        }
+    }
+
+    private fun clearCurrentPlayground() {
+        with(binding) {
+            if (tvCurrentPlaygroundTitle.isVisible) {
+                tvCurrentPlaygroundTitle.isVisible = false
+                tvCurrentPlayground.isVisible = false
+            }
+        }
     }
 
     private fun setViewDataFromModel() {

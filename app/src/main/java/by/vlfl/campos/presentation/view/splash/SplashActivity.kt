@@ -36,6 +36,7 @@ class SplashActivity : AppCompatActivity() {
 
             navigateToSignInEvent.observe(this@SplashActivity, {
                 startActivity(Intent(this@SplashActivity, SignInActivity::class.java))
+                finish()
             })
         }
 

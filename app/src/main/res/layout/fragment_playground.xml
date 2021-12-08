@@ -66,6 +66,7 @@
             android:fontFamily="@font/raleway"
             android:text="@string/fragment_playground_currently_there_label"
             android:textSize="20sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_playground_category"
@@ -76,6 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="16dp"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/b_im_in"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,6 +88,21 @@
             tools:itemCount="3"
             tools:listitem="@layout/active_player_item" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_no_active_players"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="@font/raleway"
+            android:text="There are no active players there at the moment"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/b_im_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_playground_category" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/b_im_in"
             android:layout_width="match_parent"
@@ -93,15 +110,14 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="48dp"
             android:backgroundTint="@color/white"
+            android:onClick="@{() -> vm.checkInCurrentUser()}"
             android:text="@string/fragment_playground_button_in_label"
             android:textColor="@color/gray_600"
             android:textSize="16sp"
-            android:onClick="@{() -> vm.checkInCurrentUser()}"
             app:cornerRadius="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_users_on_playground"
             app:layout_constraintVertical_bias="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

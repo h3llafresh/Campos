@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -80,7 +81,15 @@ class PlaygroundFragment : Fragment() {
     private fun observeViewModel() {
         lifecycleScope.launchWhenStarted {
             viewModel.activePlayers.collect { activePlayers ->
-                activePlayersAdapter?.replace(activePlayers.filter { it.name != "" })
+                val filteredPlayers = activePlayers.filter { it.name != "" }
+                activePlayersAdapter?.replace(filteredPlayers)
+
+                with(binding) {
+                    val noPlayersOnPlayground = filteredPlayers.isNullOrEmpty()
+                        tvNoActivePlayers.isVisible = noPlayersOnPlayground
+                        tvCurrentlyThereLabel.isVisible = !noPlayersOnPlayground
+                        rvUsersOnPlayground.isVisible = !noPlayersOnPlayground
+                }
             }
         }
     }

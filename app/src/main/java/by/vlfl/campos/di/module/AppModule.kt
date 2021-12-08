@@ -4,5 +4,5 @@ import by.vlfl.campos.di.MainComponent
 import by.vlfl.campos.di.SplashComponent
 import dagger.Module
 
-@Module(subcomponents = [MainComponent::class, SplashComponent::class])
+@Module(subcomponents = [MainComponent::class, SplashComponent::class, SignInComponent::class])
 class AppModule

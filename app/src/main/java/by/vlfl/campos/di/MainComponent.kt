@@ -5,7 +5,7 @@ import by.vlfl.campos.presentation.view.main.playground.PlaygroundFragment
 import by.vlfl.campos.presentation.view.main.profile.ProfileFragment
 import dagger.Subcomponent
 
-@Subcomponent()
+@Subcomponent
 interface MainComponent {
 
     @Subcomponent.Builder

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.presentation.view.main.MainActivity
 import by.vlfl.campos.presentation.view.signIn.SignInActivity
-import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
 @SuppressLint("CustomSplashScreen")
@@ -25,28 +24,20 @@ class SplashActivity : AppCompatActivity() {
 
         observeViewModel()
 
-        checkUserAuthorization()
+        viewModel.checkUserAuthorization()
     }
 
-    private fun routeToSignInScreen() {
-        startActivity(Intent(this, SignInActivity::class.java))
-    }
+    private fun observeViewModel() {
+        with (viewModel) {
+            navigateToMainActivityEvent.observe(this@SplashActivity, { profileModel ->
+                startActivity(MainActivity.create(this@SplashActivity, profileModel))
+                finish()
+            })
 
-    private fun observeViewModel(){
-        viewModel.navigateToMainActivityEvent.observe(this, { profileModel ->
-            startActivity(MainActivity.create(this, profileModel))
-            finish()
-        })
-    }
-
-    private fun checkUserAuthorization() {
-        val auth = FirebaseAuth.getInstance()
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            viewModel.provideUserLogin(currentUser.uid)
-        } else {
-            routeToSignInScreen()
+            navigateToSignInEvent.observe(this@SplashActivity, {
+                startActivity(Intent(this@SplashActivity, SignInActivity::class.java))
+            })
         }
-    }
 
+    }
 }

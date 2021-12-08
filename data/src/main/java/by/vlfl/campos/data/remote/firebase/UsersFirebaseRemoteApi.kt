@@ -33,11 +33,17 @@ class UsersFirebaseRemoteApi @Inject constructor() {
 
     private val userCurrentPlaygroundDataFlow = MutableSharedFlow<Playground?>()
 
-    suspend fun getUserData(userID: String): User {
+    suspend fun getUserData(userID: String): User? {
         return withContext(Dispatchers.IO) {
             val task = usersRemoteReference.child(userID).get()
             Tasks.await(task).getValue<User>()
-                ?: throw (IllegalStateException("User with such ID wasn't retrieved"))
+        }
+    }
+
+    suspend fun registerUserData(userID: String, userName: String) {
+        return withContext(Dispatchers.IO) {
+            val userNameMap = mapOf("name" to userName)
+            usersRemoteReference.updateChildren(mapOf(userID to userNameMap))
         }
     }
 
@@ -46,6 +52,9 @@ class UsersFirebaseRemoteApi @Inject constructor() {
             val playgroundDataMap = mapOf("name" to playgroundName)
             usersRemoteReference.child(userID).child("currentPlayground").setValue(mapOf(playgroundID to playgroundDataMap))
             val user = getUserData(userID)
+
+            user ?: throw (IllegalStateException("User with such ID wasn't retrieved"))
+
             val userDataMap = mapOf("name" to user.name)
             playgroundsRemoteReference.child(playgroundID).child("activePlayers").updateChildren(
                 mapOf(userID to userDataMap)

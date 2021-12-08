@@ -1,23 +1,26 @@
 package by.vlfl.campos.presentation.view.signIn
 
-import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import by.vlfl.campos.R
+import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.ActivitySigninBinding
 import by.vlfl.campos.presentation.view.main.MainActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.firebase.auth.FirebaseAuth
+import javax.inject.Inject
 
 class SignInActivity : AppCompatActivity() {
 
     private var _binding: ActivitySigninBinding? = null
     private val binding get() = _binding!!
 
-    private var _auth: FirebaseAuth? = null
-    private val auth get() = _auth!!
+    @Inject
+    lateinit var factory: SignInViewModel.Factory
+
+    private val viewModel: SignInViewModel by viewModels { factory }
 
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
@@ -29,7 +32,10 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.appComponent.signInComponent().build().inject(this)
         createSingInIntent()
+
+        observeViewModel()
     }
 
     private fun createSingInIntent() {
@@ -47,9 +53,14 @@ class SignInActivity : AppCompatActivity() {
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == RESULT_OK) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            viewModel.checkUserAuthorization()
         }
-        finish()
+    }
+
+    private fun observeViewModel() {
+        viewModel.navigateToMainActivityEvent.observe(this, { profileModel ->
+            startActivity(MainActivity.create(this, profileModel))
+            finish()
+        })
     }
 }

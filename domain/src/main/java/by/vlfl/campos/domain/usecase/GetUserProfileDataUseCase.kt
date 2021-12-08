@@ -4,7 +4,7 @@ import by.vlfl.campos.domain.entity.User
 import by.vlfl.campos.domain.repostitory.IUserRepository
 
 class GetUserProfileDataUseCase (private val userRepository: IUserRepository) {
-    suspend operator fun invoke(userID: String): User {
+    suspend operator fun invoke(userID: String): User? {
         return userRepository.getUserData(userID)
     }
 }

@@ -19,4 +19,5 @@ interface AppComponent  {
     fun inject(application: MainApp)
     fun mainComponent(): MainComponent.Builder
     fun splashComponent(): SplashComponent.Builder
+    fun signInComponent(): SignInComponent.Builder
 }

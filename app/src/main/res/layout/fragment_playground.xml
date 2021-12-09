@@ -40,7 +40,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_playground_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_playground_name"
             tools:text="Jackson str, 28, NYC, United States of America" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -102,6 +102,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_playground_category" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_you_are_on_playground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="@font/raleway"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/fragment_playground_you_are_on_this_playground"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/b_im_in"

@@ -24,8 +24,8 @@ class UserModule {
         RegisterUserDataUseCase(repository)
 
     @Provides
-    fun provideUserCurrentPlayground(repository: IUserRepository): GetUserCurrentPlayground =
-        GetUserCurrentPlayground(repository)
+    fun provideUserCurrentPlayground(repository: IUserRepository): GetUserCurrentPlaygroundUseCase =
+        GetUserCurrentPlaygroundUseCase(repository)
 
     @Provides
     fun provideCheckInCurrentUserUseCase(repository: IUserRepository): CheckInCurrentUserUseCase =

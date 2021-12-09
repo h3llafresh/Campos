@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import by.vlfl.campos.domain.entity.Playground
-import by.vlfl.campos.domain.usecase.GetUserCurrentPlayground
+import by.vlfl.campos.domain.usecase.GetUserCurrentPlaygroundUseCase
 import by.vlfl.campos.domain.usecase.LeaveCurrentGameUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProfileViewModel(getUserCurrentPlayground: GetUserCurrentPlayground, private val leaveCurrentGameUseCase: LeaveCurrentGameUseCase) :
+class ProfileViewModel(getUserCurrentPlaygroundUseCase: GetUserCurrentPlaygroundUseCase, private val leaveCurrentGameUseCase: LeaveCurrentGameUseCase) :
     ViewModel() {
 
     private val _logoutEvent: SingleLiveEvent<Nothing> = emptySingleLiveEvent()
@@ -33,7 +33,7 @@ class ProfileViewModel(getUserCurrentPlayground: GetUserCurrentPlayground, priva
         viewModelScope.launch {
             val userID = FirebaseAuth.getInstance().currentUser?.uid
             if (userID != null) {
-                _currentPlayground.emitAll(getUserCurrentPlayground(userID))
+                _currentPlayground.emitAll(getUserCurrentPlaygroundUseCase(userID))
             }
         }
     }
@@ -53,13 +53,13 @@ class ProfileViewModel(getUserCurrentPlayground: GetUserCurrentPlayground, priva
     }
 
     class Factory @Inject constructor(
-        private val getUserCurrentPlayground: GetUserCurrentPlayground,
+        private val getUserCurrentPlaygroundUseCase: GetUserCurrentPlaygroundUseCase,
         private val leaveCurrentGame: LeaveCurrentGameUseCase,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             require(modelClass == ProfileViewModel::class.java)
-            return ProfileViewModel(getUserCurrentPlayground, leaveCurrentGame) as T
+            return ProfileViewModel(getUserCurrentPlaygroundUseCase, leaveCurrentGame) as T
         }
     }
 

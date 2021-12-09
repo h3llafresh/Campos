@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import by.vlfl.campos.R
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentPlaygroundBinding
 import by.vlfl.campos.presentation.view.main.playground.adapter.ActivePlayersAdapter
@@ -78,17 +79,41 @@ class PlaygroundFragment : Fragment() {
         }
     }
 
-    private fun observeViewModel() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.activePlayers.collect { activePlayers ->
-                val filteredPlayers = activePlayers.filter { it.name != "" }
-                activePlayersAdapter?.replace(filteredPlayers)
+    private fun setEmptyPlaygroundViews(isPlaygroundEmpty: Boolean) {
+        with(binding) {
+            tvNoActivePlayers.isVisible = isPlaygroundEmpty
+            tvCurrentlyThereLabel.isVisible = !isPlaygroundEmpty
+            rvUsersOnPlayground.isVisible = !isPlaygroundEmpty
+        }
+    }
 
-                with(binding) {
-                    val noPlayersOnPlayground = filteredPlayers.isNullOrEmpty()
-                        tvNoActivePlayers.isVisible = noPlayersOnPlayground
-                        tvCurrentlyThereLabel.isVisible = !noPlayersOnPlayground
-                        rvUsersOnPlayground.isVisible = !noPlayersOnPlayground
+    private fun observeViewModel() {
+        with(viewModel) {
+            lifecycleScope.launchWhenStarted {
+                activePlayers.collect { activePlayers ->
+                    val filteredPlayers = activePlayers.filter { it.name != "" }
+                    activePlayersAdapter?.replace(filteredPlayers)
+
+                    setEmptyPlaygroundViews(filteredPlayers.isNullOrEmpty())
+                }
+            }
+            lifecycleScope.launchWhenStarted {
+                currentPlayground.collect { playground ->
+                    with(binding) {
+                        if (playground?.name.isNullOrEmpty()) {
+                            bImIn.isVisible = true
+                            tvYouAreOnPlayground.isVisible = false
+                        } else {
+                            bImIn.isVisible = false
+                            tvYouAreOnPlayground.isVisible = true
+                            if (playground!!.id == viewModel.model.id) {
+                                tvYouAreOnPlayground.text = requireContext().getString(R.string.fragment_playground_you_are_on_this_playground)
+                            } else {
+                                tvYouAreOnPlayground.text =
+                                    requireContext().getString(R.string.fragment_playground_you_are_on_another_playground, playground.name)
+                            }
+                        }
+                    }
                 }
             }
         }

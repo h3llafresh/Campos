@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -20,7 +21,10 @@ import by.vlfl.campos.utils.PermissionUtils
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = checkNotNull(_binding, {
+            Toast.makeText(this, "Do not use binding, when it might be unavailable", Toast.LENGTH_SHORT).show()
+        })
 
     private val profileModel by lazy { intent.extras?.getParcelable<ProfileModel>(PROFILE_MODEL_KEY) }
 

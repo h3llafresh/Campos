@@ -19,8 +19,10 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProfileViewModel(getUserCurrentPlaygroundUseCase: GetUserCurrentPlaygroundUseCase, private val leaveCurrentGameUseCase: LeaveCurrentGameUseCase) :
-    ViewModel() {
+class ProfileViewModel(
+    getUserCurrentPlaygroundUseCase: GetUserCurrentPlaygroundUseCase,
+    private val leaveCurrentGameUseCase: LeaveCurrentGameUseCase
+) : ViewModel() {
 
     private val _logoutEvent: SingleLiveEvent<Nothing> = emptySingleLiveEvent()
     val logoutEvent: LiveData<Nothing>

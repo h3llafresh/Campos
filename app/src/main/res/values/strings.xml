@@ -5,6 +5,22 @@
     <string name="bottom_menu_profile_title">Profile</string>
     <string name="bottom_menu_map_title">Map</string>
 
+    <!--fragment_sign_in.xml-->
+    <string name="fragment_sign_in_title">Hey there! Ready to go?\nJust sign in with your Campos account and you\'re all set</string>
+    <string name="fragment_sign_in_email_input_hint">Email</string>
+    <string name="fragment_sign_in_password_input_hint">Password</string>
+    <string name="fragment_sign_in_action_sign_in">Sign in</string>
+    <string name="fragment_sign_in_sign_up_suggestion">Aren\'t with us yet?\nPress Sign up and join!\nEasy like 1 2 3</string>
+    <string name="fragment_sign_in_action_sign_up">Sign up</string>
+
+    <!--fragment_sign_up.xml-->
+    <string name="fragment_sign_up_text_tell_us_about_you">Yay!\nWe are <b>Campos</b> - a community of people enjoying sports and hanging out together!\nWhat about <b>you</b>?</string>
+    <string name="fragment_sign_up_input_hint_first_name">First name</string>
+    <string name="fragment_sign_up_input_hint_last_name">Last name</string>
+    <string name="fragment_sign_up_input_hint_residence_country">Country of residence</string>
+    <string name="fragment_sign_up_input_hint_residence_city">City of residence</string>
+    <string name="fragment_sign_up_action_next">Next</string>
+
     <!--fragment_playground.xml-->
     <string name="fragment_playground_button_in_label">I\'m in !</string>
     <string name="fragment_playground_currently_there_label">currently there</string>
@@ -12,13 +28,16 @@
     <string name="fragment_playground_you_are_on_another_playground"><u>You are playing on %s at the moment! To join this game, please, end another one</u></string>
 
     <!--fragment_profile.xml-->
-    <string name="fragment_profile_button_log_out_label">log\nout</string>
+    <string name="fragment_profile_text_currently_playing_on">You are currently playing on</string>
+    <string name="fragment_profile_text_no_active_games">
+        You are currently not playing anywhere. \nGo to map and find someone to play with!
+    </string>
+    <string name="fragment_profile_action_leave_game">Leave the game</string>
+    <string name="fragment_profile_action_log_out_label">log\nout</string>
     <string name="fragment_profile_campos_athlete_label"><u>Campos Athlete</u></string>
 
     <!--PermissionDeniedDialog-->
-    <string name="permission_denied_dialog__permission_required_message">
-        Oops! Sorry, playgrounds won\'t work without location data. Please provide location access permission in settings
-    </string>
+    <string name="permission_denied_dialog__permission_required_message">Oops! Sorry, playgrounds won\'t work without location data. Please provide location access permission in settings</string>
     <string name="permission_denied_dialog__positive_button_text">OK</string>
 
 </resources>

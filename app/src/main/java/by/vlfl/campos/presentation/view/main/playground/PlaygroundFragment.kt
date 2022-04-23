@@ -15,7 +15,6 @@ import by.vlfl.campos.R
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentPlaygroundBinding
 import by.vlfl.campos.presentation.view.main.playground.adapter.ActivePlayersAdapter
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 class PlaygroundFragment : Fragment() {
@@ -55,7 +54,7 @@ class PlaygroundFragment : Fragment() {
         setViewDataFromModel()
         setupActivePlayersRecyclerView()
 
-        observeViewModel()
+        observeViewModelFlows()
     }
 
     private fun setupActivePlayersRecyclerView() {
@@ -71,23 +70,19 @@ class PlaygroundFragment : Fragment() {
         }
     }
 
-    private fun setViewDataFromModel() {
-        with(binding) {
-            tvPlaygroundName.text = viewModel.model.name
-            tvPlaygroundAddress.text = viewModel.model.address
-            tvPlaygroundCategory.text = viewModel.model.category
-        }
+    private fun setViewDataFromModel() = with(binding) {
+        tvPlaygroundName.text = viewModel.model.name
+        tvPlaygroundAddress.text = viewModel.model.address
+        tvPlaygroundCategory.text = viewModel.model.category
     }
 
-    private fun setEmptyPlaygroundViews(isPlaygroundEmpty: Boolean) {
-        with(binding) {
-            tvNoActivePlayers.isVisible = isPlaygroundEmpty
-            tvCurrentlyThereLabel.isVisible = !isPlaygroundEmpty
-            rvUsersOnPlayground.isVisible = !isPlaygroundEmpty
-        }
+    private fun setEmptyPlaygroundViews(isPlaygroundEmpty: Boolean) = with(binding) {
+        tvNoActivePlayers.isVisible = isPlaygroundEmpty
+        tvCurrentlyThereLabel.isVisible = !isPlaygroundEmpty
+        rvUsersOnPlayground.isVisible = !isPlaygroundEmpty
     }
 
-    private fun observeViewModel() {
+    private fun observeViewModelFlows() {
         with(viewModel) {
             lifecycleScope.launchWhenStarted {
                 activePlayers.collect { activePlayers ->

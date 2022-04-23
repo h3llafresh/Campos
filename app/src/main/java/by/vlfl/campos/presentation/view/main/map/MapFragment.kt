@@ -29,7 +29,6 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
@@ -124,7 +123,7 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
                 showDeviceLocation()
             }
 
-            observeViewModel()
+            observeViewModelFlowFields()
         }
     }
 
@@ -134,8 +133,12 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
     }
 
     private fun setupMarkerPosition(map: GoogleMap, playground: Playground) {
+        val markerPosition = playground.coordinates?.let { coordinates ->
+            val latitude = coordinates.latitude ?: return
+            val longitude = coordinates.longitude ?: return
 
-        val markerPosition = LatLng(playground.coordinates?.latitude!!, playground.coordinates?.longitude!!)
+            LatLng(latitude, longitude)
+        } ?: return
 
         with(map) {
             addMarker(
@@ -145,7 +148,7 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
                     .icon(
                         BitmapHelper.vectorToBitmap(
                             requireContext(),
-                            R.drawable.ic_playground
+                            R.drawable.ic_playground_volleyball
                         )
                     )
             ).also {
@@ -157,7 +160,7 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
         }
     }
 
-    private fun observeViewModel() {
+    private fun observeViewModelFlowFields() {
         lifecycleScope.launchWhenStarted {
             viewModel.playgrounds
                 .collect { playground ->
@@ -178,9 +181,9 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
         }
     }
 
-    private fun checkLocationPermissionGranted(): Boolean {
-        return ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-    }
+    private fun checkLocationPermissionGranted(): Boolean =
+        ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
 
     @SuppressLint("MissingPermission")
     private fun enableCurrentLocation() {

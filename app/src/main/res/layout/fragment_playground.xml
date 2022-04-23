@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_playground_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Ballers Park" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_playground_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_playground_name"
             tools:text="Jackson str, 28, NYC, United States of America" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_playground_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_playground_address"
             tools:text="football" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_currently_there_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             tools:itemCount="3"
             tools:listitem="@layout/active_player_item" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_no_active_players"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_playground_category" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_you_are_on_playground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,15 +120,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/b_im_in"
+            style="@style/Button.Secondary"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="48dp"
-            android:backgroundTint="@color/white"
             android:onClick="@{() -> vm.checkInCurrentUser()}"
             android:text="@string/fragment_playground_button_in_label"
-            android:textColor="@color/gray_600"
-            android:textSize="16sp"
             app:cornerRadius="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

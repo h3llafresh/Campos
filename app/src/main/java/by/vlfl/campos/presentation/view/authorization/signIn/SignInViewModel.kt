@@ -1,4 +1,4 @@
-package by.vlfl.campos.presentation.view.signIn
+package by.vlfl.campos.presentation.view.authorization.signIn
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

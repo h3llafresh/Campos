@@ -1,4 +1,4 @@
-package by.vlfl.campos.presentation.view.signIn
+package by.vlfl.campos.presentation.view.authorization.signIn
 
 import android.os.Bundle
 import androidx.activity.viewModels

@@ -14,9 +14,8 @@ import androidx.navigation.fragment.navArgs
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentProfileBinding
 import by.vlfl.campos.domain.entity.Playground
-import by.vlfl.campos.presentation.view.signIn.SignInActivity
+import by.vlfl.campos.presentation.view.authorization.signIn.SignInActivity
 import com.firebase.ui.auth.AuthUI
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 class ProfileFragment : Fragment() {
@@ -53,8 +52,8 @@ class ProfileFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        setViewDataFromModel()
-        observeViewModel()
+        setViewDataFromModel(args.model)
+        observeViewModelEvents()
     }
 
     override fun onDestroy() {
@@ -62,14 +61,14 @@ class ProfileFragment : Fragment() {
         _binding = null
     }
 
-    private fun observeViewModel() {
-        viewModel.logoutEvent.observe(viewLifecycleOwner, {
+    private fun observeViewModelEvents() {
+        viewModel.logoutEvent.observe(viewLifecycleOwner) {
             AuthUI.getInstance().signOut(requireContext())
                 .addOnCompleteListener {
                     startActivity(Intent(requireContext(), SignInActivity::class.java))
                     activity?.finish()
                 }
-        })
+        }
 
         lifecycleScope.launchWhenStarted {
             viewModel.currentPlayground
@@ -85,32 +84,25 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setCurrentPlayground(playground: Playground) {
-        with(binding) {
-            if (!tvCurrentPlaygroundTitle.isVisible) {
-                tvCurrentPlaygroundTitle.isVisible = true
-                tvCurrentPlayground.isVisible = true
-            }
-            tvNoActivePlays.isVisible = false
-            tvCurrentPlayground.text = playground.name
+    private fun setCurrentPlayground(playground: Playground) = with(binding) {
+        if (!tvCurrentPlaygroundTitle.isVisible) {
+            tvCurrentPlaygroundTitle.isVisible = true
+            tvCurrentPlayground.isVisible = true
+        }
+        tvNoActiveGames.isVisible = false
+        tvCurrentPlayground.text = playground.name
+    }
+
+    private fun clearCurrentPlayground() = with(binding) {
+        if (tvCurrentPlaygroundTitle.isVisible) {
+            tvCurrentPlaygroundTitle.isVisible = false
+            tvCurrentPlayground.isVisible = false
+            tvNoActiveGames.isVisible = true
         }
     }
 
-    private fun clearCurrentPlayground() {
-        with(binding) {
-            if (tvCurrentPlaygroundTitle.isVisible) {
-                tvCurrentPlaygroundTitle.isVisible = false
-                tvCurrentPlayground.isVisible = false
-                tvNoActivePlays.isVisible = true
-            }
-        }
-    }
-
-    private fun setViewDataFromModel() {
-        val model = args.model
-        with(binding) {
-            tvUserName.text = model.name
-            tvUserBirthDate.text = model.birthDate
-        }
+    private fun setViewDataFromModel(model: ProfileModel) = with(binding) {
+        tvUserName.text = model.name
+        tvUserBirthDate.text = model.birthDate
     }
 }

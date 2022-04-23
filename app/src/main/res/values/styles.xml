@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Button">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Button.Primary" />
+
+    <style name="Button.Secondary">
+        <item name="backgroundTint">@color/pastel_orange_300</item>
+        <item name="android:textColor">@color/gray_600</item>
+    </style>
+
+    <style name="BottomBarActiveIndicatorStyle" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/pastel_orange_300</item>
+    </style>
+</resources>

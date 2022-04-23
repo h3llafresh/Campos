@@ -6,8 +6,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import by.vlfl.campos.appComponent
+import by.vlfl.campos.presentation.view.authorization.signIn.SignInActivity
 import by.vlfl.campos.presentation.view.main.MainActivity
-import by.vlfl.campos.presentation.view.signIn.SignInActivity
 import javax.inject.Inject
 
 @SuppressLint("CustomSplashScreen")

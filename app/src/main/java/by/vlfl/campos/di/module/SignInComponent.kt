@@ -1,6 +1,6 @@
 package by.vlfl.campos.di.module
 
-import by.vlfl.campos.presentation.view.signIn.SignInActivity
+import by.vlfl.campos.presentation.view.authorization.signIn.SignInActivity
 import dagger.Subcomponent
 
 @Subcomponent

@@ -1,4 +1,4 @@
-package by.vlfl.campos.presentation.view.signIn
+package by.vlfl.campos.presentation.view.authorization.signIn
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,5 +15,10 @@ class LoginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSignInBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

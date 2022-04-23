@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,9 +26,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Andy Human" />
+            tools:text="Vlad" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_user_birth_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_user_name"
             tools:text="26.12.2000" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_campos_athlete_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,12 +54,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_user_birth_date" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_current_playground_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="68dp"
-            android:text="You are currently playing on"
+            android:text="@string/fragment_profile_text_currently_playing_on"
             android:textSize="24sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,27 +67,27 @@
             app:layout_constraintTop_toBottomOf="@id/tv_campos_athlete_title"
             tools:visibility="visible" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_current_playground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/raleway_bold"
-            android:text="NYC Ballers Park"
             android:textSize="24sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_current_playground_title"
+            tools:text="NYC Ballers Park"
             tools:visibility="visible" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_no_active_plays"
+        <TextView
+            android:id="@+id/tv_no_active_games"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginHorizontal="16dp"
-            android:text="You are currently not playing anywhere. \nGo to map and find someone to play with!"
+            android:gravity="center"
+            android:text="@string/fragment_profile_text_no_active_games"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@id/b_log_out"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,14 +96,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/b_leave_game"
+            style="@style/Button.Primary"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/white"
             android:onClick="@{() -> vm.leaveCurrentGame()}"
-            android:text="Leave the game"
-            android:textColor="@color/gray_600"
-            android:textSize="12sp"
+            android:text="@string/fragment_profile_action_leave_game"
             android:visibility="gone"
             app:cornerRadius="30dp"
             app:layout_constraintBottom_toTopOf="@id/b_log_out"
@@ -113,16 +111,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/b_log_out"
-            android:layout_width="95dp"
-            android:layout_height="70dp"
+            style="@style/Button.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="48dp"
-            android:backgroundTint="@color/white"
             android:drawableEnd="@drawable/ic_log_out"
             android:onClick="@{() -> vm.logOut()}"
-            android:text="@string/fragment_profile_button_log_out_label"
-            android:textColor="@color/gray_600"
-            android:textSize="12sp"
-            app:cornerRadius="30dp"
+            android:paddingVertical="12dp"
+            android:text="@string/fragment_profile_action_log_out_label"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

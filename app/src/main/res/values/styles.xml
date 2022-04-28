@@ -3,6 +3,8 @@
 
     <style name="Button">
         <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">18dp</item>
+        <item name="android:paddingBottom">18dp</item>
     </style>
 
     <style name="Button.Primary" />
@@ -12,7 +14,30 @@
         <item name="android:textColor">@color/gray_600</item>
     </style>
 
-    <style name="BottomBarActiveIndicatorStyle" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+    <style name="BottomBarActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/pastel_orange_300</item>
     </style>
+
+    <style name="FloatingActionButtonMini" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="android:backgroundTint">@color/pastel_orange_300</item>
+        <item name="fabSize">mini</item>
+        <item name="tint">@color/gray_600</item>
+    </style>
+
+    <style name="ExtendedFloatingActionButton" parent="Widget.Material3.ExtendedFloatingActionButton.Primary">
+        <item name="android:backgroundTint">@color/pastel_orange_400</item>
+        <item name="iconTint">@color/gray_600</item>
+        <item name="android:textColor">@color/gray_600</item>
+        <item name="android:textAppearance">@style/ExtendedFloatingActionButtonText</item>
+    </style>
+
+    <style name="ChipFilter" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_filter_background</item>
+    </style>
+
+    <style name="ExtendedFloatingActionButtonText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

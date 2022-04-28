@@ -1,7 +1,7 @@
 package by.vlfl.campos.domain.repostitory
 
-import by.vlfl.campos.domain.entity.Playground
 import by.vlfl.campos.domain.entity.User
+import by.vlfl.campos.domain.entity.UserCurrentPlayground
 import kotlinx.coroutines.flow.Flow
 
 interface IUserRepository {
@@ -11,7 +11,7 @@ interface IUserRepository {
 
     suspend fun checkInCurrentUser(userID: String, playgroundID: String, playgroundName: String)
 
-    suspend fun getUserCurrentPlayground(userID: String): Flow<Playground?>
+    suspend fun getUserCurrentPlayground(userID: String): Flow<UserCurrentPlayground?>
 
     suspend fun leaveCurrentGame(userID: String, playgroundID: String)
 }

@@ -1,14 +1,13 @@
-package by.vlfl.campos.data.remote.firebase
+package by.vlfl.campos.data.remote.firebase.user.api
 
 import android.util.Log
-import by.vlfl.campos.domain.entity.Playground
-import by.vlfl.campos.domain.entity.User
+import by.vlfl.campos.data.remote.firebase.user.UserCurrentPlaygroundDto
+import by.vlfl.campos.data.remote.firebase.user.UserDto
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -31,12 +30,12 @@ class UsersFirebaseRemoteApi @Inject constructor() {
     @Named("Playgrounds")
     lateinit var playgroundsRemoteReference: DatabaseReference
 
-    private val userCurrentPlaygroundDataFlow = MutableSharedFlow<Playground?>()
+    private val userCurrentPlaygroundDataFlow = MutableSharedFlow<UserCurrentPlaygroundDto?>()
 
-    suspend fun getUserData(userID: String): User? {
+    suspend fun getUserData(userID: String): UserDto? {
         return withContext(Dispatchers.IO) {
             val task = usersRemoteReference.child(userID).get()
-            Tasks.await(task).getValue<User>()
+            Tasks.await(task).getValue(UserDto::class.java)
         }
     }
 
@@ -62,7 +61,7 @@ class UsersFirebaseRemoteApi @Inject constructor() {
         }
     }
 
-    fun subscribeToUserCurrentPlayground(userID: String): Flow<Playground?> {
+    fun subscribeToUserCurrentPlayground(userID: String): Flow<UserCurrentPlaygroundDto?> {
         setUserPlaygroundDataChangeListener(userID)
         return userCurrentPlaygroundDataFlow
     }
@@ -73,7 +72,8 @@ class UsersFirebaseRemoteApi @Inject constructor() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     CoroutineScope(Dispatchers.IO).launch {
                         for (playgroundSnapshot in snapshot.children) {
-                            val currentPlayground = playgroundSnapshot.getValue<Playground>()?.copy(id = playgroundSnapshot.key)
+                            val currentPlayground =
+                                playgroundSnapshot.getValue(UserCurrentPlaygroundDto::class.java)?.copy(id = playgroundSnapshot.key)
                             userCurrentPlaygroundDataFlow.emit(currentPlayground)
                             Log.d("User playground data", currentPlayground.toString())
                         }

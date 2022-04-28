@@ -21,9 +21,32 @@
     <string name="fragment_sign_up_input_hint_residence_city">City of residence</string>
     <string name="fragment_sign_up_action_next">Next</string>
 
+    <!--fragment_map.xml-->
+    <string name="fragment_map__action_filter_desc">Filter button</string>
+    <string name="fragment_map__action_filter_text">Filter</string>
+    <string name="fragment_map__action_my_location_desc">My location button</string>
+
+    <!--fragment_filter.xml-->
+    <string name="fragment_filter__text_title">Filter playgrounds by</string>
+    <string name="fragment_filter__img_filter_by_active_players_desc">Image of group of people</string>
+    <string name="fragment_filter__text_filter_by_active_players">Active players</string>
+    <string name="fragment_filter__img_filter_by_sport_category_desc">Image of sports cup</string>
+    <string name="fragment_filter__text_filter_by_sport_category">Sport category</string>
+    <string name="fragment_filter__text_chip_active_players_all">All</string>
+    <string name="fragment_filter__text_chip_active_players_empty">Empty</string>
+    <string name="fragment_filter__text_chip_active_players_1_to_5">1–5</string>
+    <string name="fragment_filter__text_chip_active_players_5_to_10">5–10</string>
+    <string name="fragment_filter__text_chip_active_players_10_to_15">10–15</string>
+    <string name="fragment_filter__text_chip_active_players_from_15">15+</string>
+    <string name="fragment_filter__text_chip_sport_category_all">All</string>
+    <string name="fragment_filter__text_chip_sport_category_football">Football</string>
+    <string name="fragment_filter__text_chip_sport_category_basketball">Basketball</string>
+    <string name="fragment_filter__text_chip_sport_category_volleyball">Volleyball</string>
+    <string name="fragment_filter__action_apply">Apply</string>
+
     <!--fragment_playground.xml-->
     <string name="fragment_playground_button_in_label">I\'m in !</string>
-    <string name="fragment_playground_currently_there_label">currently there</string>
+    <string name="fragment_playground_currently_there_label">Currently there</string>
     <string name="fragment_playground_you_are_on_this_playground"><u>YAAAY! You are playing right here at the moment! Enjoy the game!</u></string>
     <string name="fragment_playground_you_are_on_another_playground"><u>You are playing on %s at the moment! To join this game, please, end another one</u></string>
 

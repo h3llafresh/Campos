@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="16dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/fragment_filter__text_title"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_filter_by_active_players"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/fragment_filter__img_filter_by_active_players_desc"
+        android:src="@drawable/ic_filter_active_players"
+        app:layout_constraintBottom_toBottomOf="@id/tv_filter_by_active_players"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_filter_by_active_players" />
+
+    <TextView
+        android:id="@+id/tv_filter_by_active_players"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/raleway_bold"
+        android:text="@string/fragment_filter__text_filter_by_active_players"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_filter_by_active_players"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <View
+        android:id="@+id/v_divider_filter_group_by_active_players"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray_300"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_filter_by_active_players" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cg_active_players"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:chipSpacingVertical="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_divider_filter_group_by_active_players">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_active_players_all"
+            style="@style/ChipFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_filter__text_chip_active_players_all" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_active_players_empty"
+            style="@style/ChipFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_filter__text_chip_active_players_empty" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_active_players_1_to_5"
+            style="@style/ChipFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_filter__text_chip_active_players_1_to_5" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_active_players_5_to_10"
+            style="@style/ChipFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_filter__text_chip_active_players_5_to_10" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_active_players_10_to_15"
+            style="@style/ChipFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_filter__text_chip_active_players_10_to_15" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_active_players_from_15"
+            style="@style/ChipFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_filter__text_chip_active_players_from_15" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <ImageView
+        android:id="@+id/iv_filter_by_sport_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/fragment_filter__img_filter_by_sport_category_desc"
+        android:src="@drawable/ic_filter_sport_category"
+        app:layout_constraintBottom_toBottomOf="@id/tv_filter_by_sport_category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_filter_by_sport_category" />
+
+    <TextView
+        android:id="@+id/tv_filter_by_sport_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/raleway_bold"
+        android:text="@string/fragment_filter__text_filter_by_sport_category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_filter_by_sport_category"
+        app:layout_constraintTop_toBottomOf="@id/cg_active_players" />
+
+    <View
+        android:id="@+id/v_divider_filter_group_by_sport_category"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray_300"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_filter_by_sport_category" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cg_sport_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:chipSpacingVertical="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_divider_filter_group_by_sport_category">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_sport_category_all"
+            style="@style/ChipFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_filter__text_chip_sport_category_all" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_sport_category_basketball"
+            style="@style/ChipFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_filter__text_chip_sport_category_basketball" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_sport_category_football"
+            style="@style/ChipFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_filter__text_chip_sport_category_football" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_sport_category_volleyball"
+            style="@style/ChipFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_filter__text_chip_sport_category_volleyball" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/b_apply"
+        style="@style/Button.Primary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:paddingVertical="12dp"
+        android:text="@string/fragment_filter__action_apply"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

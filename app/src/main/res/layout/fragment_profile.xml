@@ -98,7 +98,7 @@
             android:id="@+id/b_leave_game"
             style="@style/Button.Primary"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:onClick="@{() -> vm.leaveCurrentGame()}"
             android:text="@string/fragment_profile_action_leave_game"

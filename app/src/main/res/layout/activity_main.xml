@@ -19,7 +19,7 @@
         android:layout_height="@dimen/navigation_bar__height"
         app:itemPaddingBottom="8dp"
         app:itemPaddingTop="8dp"
-        app:itemActiveIndicatorStyle="@style/BottomBarActiveIndicatorStyle"
+        app:itemActiveIndicatorStyle="@style/BottomBarActiveIndicator"
         app:itemRippleColor="@null"
         app:labelVisibilityMode="selected"
         app:menu="@menu/main_bottom_menu" />

@@ -8,7 +8,6 @@ import by.vlfl.campos.domain.usecase.GetUserProfileDataUseCase
 import by.vlfl.campos.domain.usecase.RegisterUserDataUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
-import by.vlfl.campos.lifecycle.emptySingleLiveEvent
 import by.vlfl.campos.presentation.view.main.profile.ProfileModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -21,7 +20,7 @@ class SignInViewModel(
 
     private val auth = FirebaseAuth.getInstance()
 
-    private val _navigateToMainActivityEvent: SingleLiveEvent<ProfileModel> = emptySingleLiveEvent()
+    private val _navigateToMainActivityEvent: SingleLiveEvent<ProfileModel> = SingleLiveEvent()
     val navigateToMainActivityEvent: LiveData<ProfileModel> get() = _navigateToMainActivityEvent
 
     fun checkUserAuthorization() {
@@ -38,9 +37,9 @@ class SignInViewModel(
                 _navigateToMainActivityEvent.emit(
                     with(userProfileData) {
                         ProfileModel(
-                            id = id ?: "",
-                            name = name ?: "",
-                            birthDate = birthDate ?: ""
+                            id = id,
+                            name = name,
+                            birthDate = birthDate
                         )
                     }
                 )
@@ -60,7 +59,7 @@ class SignInViewModel(
         private val registerUserDataUseCase: RegisterUserDataUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             require(modelClass == SignInViewModel::class.java)
             return SignInViewModel(getUserProfileDataUseCase, registerUserDataUseCase) as T
         }

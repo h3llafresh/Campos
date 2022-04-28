@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentProfileBinding
-import by.vlfl.campos.domain.entity.Playground
+import by.vlfl.campos.domain.entity.UserCurrentPlayground
 import by.vlfl.campos.presentation.view.authorization.signIn.SignInActivity
 import com.firebase.ui.auth.AuthUI
 import javax.inject.Inject
@@ -73,7 +73,7 @@ class ProfileFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.currentPlayground
                 .collect { playground ->
-                    if (playground != null && !playground.name.isNullOrEmpty()) {
+                    if (playground != null && playground.playgroundName.isNotEmpty()) {
                         setCurrentPlayground(playground)
                         binding.bLeaveGame.isVisible = true
                     } else {
@@ -84,13 +84,13 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setCurrentPlayground(playground: Playground) = with(binding) {
+    private fun setCurrentPlayground(playground: UserCurrentPlayground) = with(binding) {
         if (!tvCurrentPlaygroundTitle.isVisible) {
             tvCurrentPlaygroundTitle.isVisible = true
             tvCurrentPlayground.isVisible = true
         }
         tvNoActiveGames.isVisible = false
-        tvCurrentPlayground.text = playground.name
+        tvCurrentPlayground.text = playground.playgroundName
     }
 
     private fun clearCurrentPlayground() = with(binding) {

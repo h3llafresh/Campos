@@ -73,7 +73,7 @@ class PlaygroundFragment : Fragment() {
     private fun setViewDataFromModel() = with(binding) {
         tvPlaygroundName.text = viewModel.model.name
         tvPlaygroundAddress.text = viewModel.model.address
-        tvPlaygroundCategory.text = viewModel.model.category
+        tvPlaygroundCategory.text = viewModel.model.category?.name
     }
 
     private fun setEmptyPlaygroundViews(isPlaygroundEmpty: Boolean) = with(binding) {
@@ -82,31 +82,29 @@ class PlaygroundFragment : Fragment() {
         rvUsersOnPlayground.isVisible = !isPlaygroundEmpty
     }
 
-    private fun observeViewModelFlows() {
-        with(viewModel) {
-            lifecycleScope.launchWhenStarted {
-                activePlayers.collect { activePlayers ->
-                    val filteredPlayers = activePlayers.filter { it.name != "" }
-                    activePlayersAdapter?.replace(filteredPlayers)
+    private fun observeViewModelFlows() = with(viewModel) {
+        lifecycleScope.launchWhenStarted {
+            activePlayers.collect { activePlayers ->
+                val filteredPlayers = activePlayers.filter { it.name != "" }
+                activePlayersAdapter?.replace(filteredPlayers)
 
-                    setEmptyPlaygroundViews(filteredPlayers.isNullOrEmpty())
-                }
+                setEmptyPlaygroundViews(filteredPlayers.isNullOrEmpty())
             }
-            lifecycleScope.launchWhenStarted {
-                currentPlayground.collect { playground ->
-                    with(binding) {
-                        if (playground?.name.isNullOrEmpty()) {
-                            bImIn.isVisible = true
-                            tvYouAreOnPlayground.isVisible = false
+        }
+        lifecycleScope.launchWhenStarted {
+            currentPlayground.collect { playground ->
+                with(binding) {
+                    if (playground?.playgroundName.isNullOrEmpty()) {
+                        bImIn.isVisible = true
+                        tvYouAreOnPlayground.isVisible = false
+                    } else {
+                        bImIn.isVisible = false
+                        tvYouAreOnPlayground.isVisible = true
+                        if (playground?.id == viewModel.model.id) {
+                            tvYouAreOnPlayground.text = getString(R.string.fragment_playground_you_are_on_this_playground)
                         } else {
-                            bImIn.isVisible = false
-                            tvYouAreOnPlayground.isVisible = true
-                            if (playground!!.id == viewModel.model.id) {
-                                tvYouAreOnPlayground.text = requireContext().getString(R.string.fragment_playground_you_are_on_this_playground)
-                            } else {
-                                tvYouAreOnPlayground.text =
-                                    requireContext().getString(R.string.fragment_playground_you_are_on_another_playground, playground.name)
-                            }
+                            tvYouAreOnPlayground.text =
+                                getString(R.string.fragment_playground_you_are_on_another_playground, playground?.playgroundName)
                         }
                     }
                 }

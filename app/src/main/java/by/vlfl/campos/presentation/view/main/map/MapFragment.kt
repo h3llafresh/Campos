@@ -11,15 +11,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import by.vlfl.campos.NavGraphMainDirections
 import by.vlfl.campos.R
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentMapBinding
 import by.vlfl.campos.domain.entity.Playground
-import by.vlfl.campos.presentation.view.main.playground.PlaygroundModel
+import by.vlfl.campos.domain.entity.SportCategory
+import by.vlfl.campos.presentation.view.main.filter.FilterResultModel
+import by.vlfl.campos.presentation.view.main.playground.toUiModel
 import by.vlfl.campos.utils.BitmapHelper
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -31,7 +33,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import javax.inject.Inject
 
-class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
+class MapFragment : Fragment() {
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
 
@@ -52,13 +54,27 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
         context.appComponent.mainComponent().build().inject(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(FILTER_REQUEST_KEY) { _, bundle ->
+            val result = bundle.getParcelable<FilterResultModel>(FILTER_REQUEST_BUNDLE_KEY) ?: return@setFragmentResultListener
+            viewModel.applyPlaygroundFilters(result.activePlayersFilters, result.sportCategoryFilters)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentMapBinding.inflate(inflater, container, false)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         mapView = binding.gMapPlaygroundsMap
+
+        setupFilterButtonClickListener()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeVm()
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -71,6 +87,7 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
 
     override fun onStart() {
         super.onStart()
+        viewModel.updateVm()
         mapView?.onStart()
     }
 
@@ -122,23 +139,23 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
                 enableCurrentLocation()
                 showDeviceLocation()
             }
+            setOnMyLocationClickListener()
 
             observeViewModelFlowFields()
         }
     }
 
-    override fun onMyLocationButtonClick(): Boolean {
-        showDeviceLocation()
-        return false
+    private fun setOnMyLocationClickListener() = binding.bMyLocation.setOnClickListener {
+        showAnimatedDeviceLocation()
     }
 
     private fun setupMarkerPosition(map: GoogleMap, playground: Playground) {
-        val markerPosition = playground.coordinates?.let { coordinates ->
+        val markerPosition = playground.coordinates.let { coordinates ->
             val latitude = coordinates.latitude ?: return
             val longitude = coordinates.longitude ?: return
 
             LatLng(latitude, longitude)
-        } ?: return
+        }
 
         with(map) {
             addMarker(
@@ -148,7 +165,7 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
                     .icon(
                         BitmapHelper.vectorToBitmap(
                             requireContext(),
-                            R.drawable.ic_playground_volleyball
+                            selectPlaygroundIcon(playground.category)
                         )
                     )
             ).also {
@@ -160,36 +177,49 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
         }
     }
 
+    private fun selectPlaygroundIcon(playgroundCategory: SportCategory) = when (playgroundCategory) {
+        SportCategory.Football -> R.drawable.ic_playground_football
+        SportCategory.Basketball -> R.drawable.ic_playground_basketball
+        SportCategory.Volleyball -> R.drawable.ic_playground_volleyball
+    }
+
     private fun observeViewModelFlowFields() {
         lifecycleScope.launchWhenStarted {
-            viewModel.playgrounds
-                .collect { playground ->
-                    setupMarkerPosition(googleMap, playground)
-                }
+            viewModel.playgrounds.collect { playground ->
+                setupMarkerPosition(googleMap, playground)
+            }
         }
     }
 
     private fun setupMarkerClickListener() {
         googleMap.setOnMarkerClickListener {
-            findNavController()
-                .navigate(
-                    NavGraphMainDirections.navigateToPlaygroundFragment(
-                        PlaygroundModel.fromDomainModel(it.tag as Playground)
-                    )
+            findNavController().navigate(
+                MapFragmentDirections.navigateToPlaygroundFragment(
+                    (it.tag as Playground).toUiModel()
                 )
+            )
             true
         }
+    }
+
+    private fun setupFilterButtonClickListener() = binding.bFilter.setOnClickListener {
+        findNavController().navigate(MapFragmentDirections.navigateToFilterFragment())
     }
 
     private fun checkLocationPermissionGranted(): Boolean =
         ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
+    private fun observeVm() {
+        viewModel.datasetUpdatedEvent.observe(viewLifecycleOwner) {
+            googleMap.clear()
+        }
+    }
 
     @SuppressLint("MissingPermission")
     private fun enableCurrentLocation() {
         if (checkLocationPermissionGranted()) {
             googleMap.isMyLocationEnabled = true
-            googleMap.uiSettings.isMyLocationButtonEnabled = true
+            googleMap.uiSettings.isMyLocationButtonEnabled = false
         }
     }
 
@@ -209,7 +239,25 @@ class MapFragment : Fragment(), GoogleMap.OnMyLocationButtonClickListener {
         }
     }
 
-    private companion object {
+    @SuppressLint("MissingPermission")
+    private fun showAnimatedDeviceLocation() {
+        try {
+            if (checkLocationPermissionGranted()) {
+                fusedLocationClient?.lastLocation?.addOnSuccessListener { location ->
+                    if (location != null) {
+                        val locationCoordinates = LatLng(location.latitude, location.longitude)
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationCoordinates, MAP_ZOOM_LEVEL))
+                    }
+                }
+            }
+        } catch (e: SecurityException) {
+            Log.e("Location exception: %s", e.message, e)
+        }
+    }
+
+    companion object {
+        const val FILTER_REQUEST_KEY = "filterRequestKey"
+        const val FILTER_REQUEST_BUNDLE_KEY = "filterRequestBundleKey"
         private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
         private const val MAP_ZOOM_LEVEL = 15f
     }

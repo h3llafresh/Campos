@@ -1,28 +1,33 @@
 package by.vlfl.campos.data.repository
 
-import by.vlfl.campos.data.remote.firebase.UsersFirebaseRemoteApi
-import by.vlfl.campos.domain.entity.Playground
+import by.vlfl.campos.data.remote.firebase.user.UserRemoteDataSource
+import by.vlfl.campos.data.remote.firebase.user.toDomainModel
 import by.vlfl.campos.domain.entity.User
+import by.vlfl.campos.domain.entity.UserCurrentPlayground
 import by.vlfl.campos.domain.repostitory.IUserRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepository @Inject constructor(private val usersFirebaseRemoteApi: UsersFirebaseRemoteApi) : IUserRepository {
+class UserRepository @Inject constructor(private val userRemoteDataSource: UserRemoteDataSource) : IUserRepository {
     override suspend fun getUserData(userID: String): User? =
-        usersFirebaseRemoteApi.getUserData(userID)
+        userRemoteDataSource.getUserData(userID)?.toDomainModel()
 
     override suspend fun registerUserData(userID: String, userName: String) {
-        usersFirebaseRemoteApi.registerUserData(userID, userName)
+        userRemoteDataSource.registerUserData(userID, userName)
     }
 
     override suspend fun checkInCurrentUser(userID: String, playgroundID: String, playgroundName: String) =
-        usersFirebaseRemoteApi.checkInCurrentUser(userID, playgroundID, playgroundName)
+        userRemoteDataSource.checkInCurrentUser(userID, playgroundID, playgroundName)
 
-    override suspend fun getUserCurrentPlayground(userID: String): Flow<Playground?> = usersFirebaseRemoteApi.subscribeToUserCurrentPlayground(userID)
+    override suspend fun getUserCurrentPlayground(userID: String): Flow<UserCurrentPlayground?> =
+        userRemoteDataSource.getUserCurrentPlayground(userID).map { userCurrentPlaygroundDto ->
+            userCurrentPlaygroundDto?.toDomainModel()
+        }
 
     override suspend fun leaveCurrentGame(userID: String, playgroundID: String) {
-        usersFirebaseRemoteApi.leaveCurrentGame(userID, playgroundID)
+        userRemoteDataSource.leaveCurrentGame(userID, playgroundID)
     }
 }

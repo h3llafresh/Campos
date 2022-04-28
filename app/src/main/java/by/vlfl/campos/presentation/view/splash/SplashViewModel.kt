@@ -8,7 +8,6 @@ import by.vlfl.campos.domain.usecase.GetUserProfileDataUseCase
 import by.vlfl.campos.domain.usecase.RegisterUserDataUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
-import by.vlfl.campos.lifecycle.emptySingleLiveEvent
 import by.vlfl.campos.presentation.view.main.profile.ProfileModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -21,10 +20,10 @@ class SplashViewModel(
 
     private val auth = FirebaseAuth.getInstance()
 
-    private val _navigateToMainActivityEvent: SingleLiveEvent<ProfileModel> = emptySingleLiveEvent()
+    private val _navigateToMainActivityEvent: SingleLiveEvent<ProfileModel> = SingleLiveEvent()
     val navigateToMainActivityEvent: LiveData<ProfileModel> get() = _navigateToMainActivityEvent
 
-    private val _navigateToSignInEvent: SingleLiveEvent<Nothing> = emptySingleLiveEvent()
+    private val _navigateToSignInEvent: SingleLiveEvent<Nothing> = SingleLiveEvent()
     val navigateToSignInEvent: LiveData<Nothing> get() = _navigateToSignInEvent
 
     fun checkUserAuthorization() {
@@ -43,9 +42,9 @@ class SplashViewModel(
                 _navigateToMainActivityEvent.emit(
                     with(userProfileData) {
                         ProfileModel(
-                            id = id ?: "",
-                            name = name ?: "",
-                            birthDate = birthDate ?: ""
+                            id = id,
+                            name = name,
+                            birthDate = birthDate
                         )
                     }
                 )
@@ -65,7 +64,7 @@ class SplashViewModel(
         private val registerUserDataUseCase: RegisterUserDataUseCase
         ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             require(modelClass == SplashViewModel::class.java)
             return SplashViewModel(getUserProfileDataUseCase, registerUserDataUseCase) as T
         }

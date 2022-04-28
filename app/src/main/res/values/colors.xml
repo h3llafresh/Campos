@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="gray_300">#A0B5CD</color>
     <color name="gray_600">#455566</color>
     <color name="gray_800">#303B47</color>
     <color name="pastel_orange_300">#FFECCC</color>

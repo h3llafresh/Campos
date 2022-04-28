@@ -18,11 +18,11 @@ class SingleLiveEvent<T>(v: T? = null) : MutableLiveData<T>(v) {
             Log.w("SingleLiveEvent", "MultipleObservers registered but only one will be notified of changes and only once.")
         }
 
-        super.observe(owner, { t ->
+        super.observe(owner) { t ->
             if (pending.compareAndSet(true, false)) {
                 observer.onChanged(t)
             }
-        })
+        }
     }
 
     @MainThread
@@ -46,5 +46,3 @@ fun SingleLiveEvent<Nothing>.postEmit() {
 fun <T> SingleLiveEvent<T>.emit(value: T) {
     this.value = value
 }
-
-fun <T> emptySingleLiveEvent(): SingleLiveEvent<T> = SingleLiveEvent()

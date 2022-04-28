@@ -70,7 +70,7 @@ dependencies {
 
     //Maps
     implementation "com.google.android.gms:play-services-maps:$maps_version"
-    implementation "com.google.android.gms:play-services-location:$maps_version"
+    implementation "com.google.android.gms:play-services-location:19.0.1"
     
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -78,6 +78,9 @@ dependencies {
 
     //Auth
     implementation "com.google.android.gms:play-services-auth:20.1.0"
+
+    //QR Scanner
+    implementation 'com.github.yuriy-budiyev:code-scanner:2.1.2'
 
     //Test
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

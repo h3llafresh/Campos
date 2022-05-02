@@ -8,11 +8,15 @@ import androidx.fragment.app.DialogFragment
 import by.vlfl.campos.R
 
 object PermissionUtils {
-    class LocationPermissionDeniedDialog() : DialogFragment() {
+    class DefaultPermissionDeniedDialog() : DialogFragment() {
+        var message: String? = null
+
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             return AlertDialog.Builder(activity)
-                .setMessage(R.string.permission_denied_dialog__permission_required_message)
-                .setPositiveButton(R.string.permission_denied_dialog__positive_button_text) { dialogInterface: DialogInterface, _: Int ->
+                .setMessage(checkNotNull(message) {
+                    "Permission denied dialog was created without message value"
+                })
+                .setPositiveButton(R.string.common_action_ok) { dialogInterface: DialogInterface, _: Int ->
                     dialogInterface.dismiss()
                 }
                 .create()

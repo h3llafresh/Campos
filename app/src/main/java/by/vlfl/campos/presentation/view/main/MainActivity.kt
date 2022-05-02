@@ -84,7 +84,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showMissingPermissionDialog() {
-        PermissionUtils.LocationPermissionDeniedDialog()
+        PermissionUtils.DefaultPermissionDeniedDialog()
+            .apply { message = getString(R.string.map_location_denied_dialog__permission_required_message) }
             .show(supportFragmentManager, LOCATION_PERMISSION_DENIED_DIALOG_TAG)
     }
 

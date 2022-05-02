@@ -32,8 +32,19 @@
     ]
   },
   {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels",
+    "featureType": "administrative",
+    "stylers": [
+      {
+        "color": "#757575"
+      },
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative",
+    "elementType": "labels.text.stroke",
     "stylers": [
       {
         "visibility": "off"
@@ -41,11 +52,22 @@
     ]
   },
   {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels.text.fill",
+    "featureType": "administrative.country",
+    "elementType": "labels.text",
     "stylers": [
       {
-        "color": "#bdbdbd"
+        "saturation": -5
+      },
+      {
+        "visibility": "simplified"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.province",
+    "stylers": [
+      {
+        "visibility": "simplified"
       }
     ]
   },
@@ -243,15 +265,6 @@
     ]
   },
   {
-    "featureType": "road.arterial",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
     "featureType": "road.highway",
     "elementType": "geometry",
     "stylers": [
@@ -288,15 +301,6 @@
     ]
   },
   {
-    "featureType": "transit.line",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e5e5e5"
-      }
-    ]
-  },
-  {
     "featureType": "transit.station",
     "elementType": "geometry",
     "stylers": [
@@ -328,7 +332,7 @@
     "elementType": "labels.text",
     "stylers": [
       {
-        "color": "#79c5fd"
+        "color": "#448cf9"
       },
       {
         "weight": 8
@@ -349,7 +353,7 @@
     "elementType": "labels.text.stroke",
     "stylers": [
       {
-        "color": "#3eadff"
+        "color": "#448cf9"
       },
       {
         "weight": 1.5

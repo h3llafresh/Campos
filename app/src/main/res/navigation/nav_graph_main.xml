@@ -9,7 +9,7 @@
         android:id="@+id/profileFragment"
         android:name="by.vlfl.campos.presentation.view.main.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
 
         <argument
             android:name="model"
@@ -21,7 +21,7 @@
         android:id="@+id/mapFragment"
         android:name="by.vlfl.campos.presentation.view.main.map.MapFragment"
         android:label="MapFragment"
-        tools:layout="@layout/fragment_map" >
+        tools:layout="@layout/fragment_map">
 
         <action
             android:id="@+id/navigate_to_playgroundFragment"
@@ -50,7 +50,37 @@
             android:name="model"
             app:argType="by.vlfl.campos.presentation.view.main.playground.PlaygroundUiModel" />
 
+        <action
+            android:id="@+id/navigate_to_qrConfirmationFragment"
+            app:destination="@id/qrConfirmationFragment"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/qrConfirmationFragment"
+        android:name="by.vlfl.campos.presentation.view.main.qrConfirmation.QrConfirmationFragment"
+        android:label="QrConfirmationFragment"
+        tools:layout="@layout/fragment_qr_confirmation">
+
+        <argument
+            android:name="model"
+            app:argType="by.vlfl.campos.presentation.view.main.qrConfirmation.QrConfirmationUiModel" />
+
+        <action
+            android:id="@+id/navigate_to_successQrConfirmationFragment"
+            app:destination="@id/successQrConfirmationFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/qrConfirmationFragment"
+            app:popUpToInclusive="true"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/successQrConfirmationFragment"
+        android:name="by.vlfl.campos.presentation.view.main.qrConfirmation.success.SuccessQrConfirmationFragment"
+        android:label="SuccessQrConfirmationFragment"
+        tools:layout="@layout/fragment_success_qr_confirmation"/>
 
     <fragment
         android:id="@+id/filterFragment"

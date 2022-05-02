@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import by.vlfl.campos.R
@@ -54,7 +55,8 @@ class PlaygroundFragment : Fragment() {
         setViewDataFromModel()
         setupActivePlayersRecyclerView()
 
-        observeViewModelFlows()
+        collectViewModelFlows()
+        observeViewModelEvents()
     }
 
     private fun setupActivePlayersRecyclerView() {
@@ -82,7 +84,13 @@ class PlaygroundFragment : Fragment() {
         rvUsersOnPlayground.isVisible = !isPlaygroundEmpty
     }
 
-    private fun observeViewModelFlows() = with(viewModel) {
+    private fun observeViewModelEvents() {
+        viewModel.openQrConfirmationEvent.observe(viewLifecycleOwner) { model ->
+            findNavController().navigate(PlaygroundFragmentDirections.navigateToQrConfirmationFragment(model))
+        }
+    }
+
+    private fun collectViewModelFlows() = with(viewModel) {
         lifecycleScope.launchWhenStarted {
             activePlayers.collect { activePlayers ->
                 val filteredPlayers = activePlayers.filter { it.name != "" }
@@ -95,10 +103,10 @@ class PlaygroundFragment : Fragment() {
             currentPlayground.collect { playground ->
                 with(binding) {
                     if (playground?.playgroundName.isNullOrEmpty()) {
-                        bImIn.isVisible = true
+                        bCheckIn.isVisible = true
                         tvYouAreOnPlayground.isVisible = false
                     } else {
-                        bImIn.isVisible = false
+                        bCheckIn.isVisible = false
                         tvYouAreOnPlayground.isVisible = true
                         if (playground?.id == viewModel.model.id) {
                             tvYouAreOnPlayground.text = getString(R.string.fragment_playground_you_are_on_this_playground)

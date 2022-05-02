@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Campos</string>
 
+    <!--Common-->
+    <string name="common_action_ok">OK</string>
+
     <!--Bottom menu-->
     <string name="bottom_menu_profile_title">Profile</string>
     <string name="bottom_menu_map_title">Map</string>
@@ -50,6 +53,16 @@
     <string name="fragment_playground_you_are_on_this_playground"><u>YAAAY! You are playing right here at the moment! Enjoy the game!</u></string>
     <string name="fragment_playground_you_are_on_another_playground"><u>You are playing on %s at the moment! To join this game, please, end another one</u></string>
 
+    <!--fragment_qr_confirmation.xml-->
+    <string name="fragment_qr_confirmation__text_scan_qr">OK, now catch Campos QR code with your camera to confirm that you are on playground!</string>
+
+    <!--fragment_success_qr_confirmation.xml-->
+    <string name="fragment_success_qr_confirmation__text_success_title">Success!</string>
+    <string name="fragment_success_qr_confirmation__text_success_subtitle">Gotcha! You\'ve approved your location on playground! Thank you and enjoy the game!</string>
+    <string name="fragment_success_qr_confirmation__desc_image_alex">Woman in a sport suit, showing like gesture</string>
+    <string name="fragment_success_qr_confirmation__desc_image_dave">Man in a sport suit, showing like gesture</string>
+    <string name="fragment_success_qr_confirmation__desc_image_andy">Man in a sport suit, showing like gesture</string>
+
     <!--fragment_profile.xml-->
     <string name="fragment_profile_text_currently_playing_on">You are currently playing on</string>
     <string name="fragment_profile_text_no_active_games">
@@ -60,7 +73,8 @@
     <string name="fragment_profile_campos_athlete_label"><u>Campos Athlete</u></string>
 
     <!--PermissionDeniedDialog-->
-    <string name="permission_denied_dialog__permission_required_message">Oops! Sorry, playgrounds won\'t work without location data. Please provide location access permission in settings</string>
-    <string name="permission_denied_dialog__positive_button_text">OK</string>
+    <string name="map_location_denied_dialog__permission_required_message">Oops! Sorry, playgrounds won\'t work without location data. Please provide location access permission in settings</string>
+    <string name="qr_confirmation_location_denied_dialog__permission_required_message">Oops! Sorry, QR confirmation won\'t work without location data. Please provide location access permission in settings</string>
+    <string name="qr_confirmation_camera_denied_dialog__permission_required_message">Oops! Sorry, QR confirmation won\'t work without camera. Please provide camera access permission in settings</string>
 
 </resources>

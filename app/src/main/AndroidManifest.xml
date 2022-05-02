@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="by.vlfl.campos">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
     <uses-permission android:name="android.permission.CAMERA"/>
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.any" />
 
     <application
         android:name=".MainApp"

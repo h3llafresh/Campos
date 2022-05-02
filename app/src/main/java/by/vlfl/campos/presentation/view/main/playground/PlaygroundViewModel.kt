@@ -1,5 +1,6 @@
 package by.vlfl.campos.presentation.view.main.playground
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,9 @@ import by.vlfl.campos.domain.entity.UserCurrentPlayground
 import by.vlfl.campos.domain.usecase.CheckInCurrentUserUseCase
 import by.vlfl.campos.domain.usecase.GetActivePlayersUseCase
 import by.vlfl.campos.domain.usecase.GetUserCurrentPlaygroundUseCase
+import by.vlfl.campos.lifecycle.SingleLiveEvent
+import by.vlfl.campos.lifecycle.emit
+import by.vlfl.campos.presentation.view.main.qrConfirmation.QrConfirmationUiModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -32,6 +36,10 @@ class PlaygroundViewModel(
     private val _currentPlayground = MutableSharedFlow<UserCurrentPlayground?>(1, onBufferOverflow = BufferOverflow.DROP_LATEST)
     val currentPlayground: SharedFlow<UserCurrentPlayground?> = _currentPlayground.asSharedFlow()
 
+    private val _openQrConfirmationEvent: SingleLiveEvent<QrConfirmationUiModel> = SingleLiveEvent()
+    val openQrConfirmationEvent: LiveData<QrConfirmationUiModel>
+        get() = _openQrConfirmationEvent
+
     private val userID = FirebaseAuth.getInstance().currentUser?.uid
 
     init {
@@ -47,12 +55,13 @@ class PlaygroundViewModel(
         }
     }
 
-    fun checkInCurrentUser() {
-        if (model.id != null && model.name != null && userID != null) {
-            viewModelScope.launch {
-                checkInCurrentUserUseCase(userID, model.id, model.name)
-            }
-        }
+    fun openQrConfirmation() {
+//        if (model.id != null && model.name != null && userID != null) {
+//            viewModelScope.launch {
+//                checkInCurrentUserUseCase(userID, model.id, model.name)
+//            }
+//        }
+        if (userID != null) _openQrConfirmationEvent.emit(QrConfirmationUiModel(userID))
     }
 
     private fun subscribeToCurrentPlaygroundData() {

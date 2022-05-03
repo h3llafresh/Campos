@@ -29,15 +29,15 @@ class SplashActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         with (viewModel) {
-            navigateToMainActivityEvent.observe(this@SplashActivity, { profileModel ->
+            navigateToMainActivityEvent.observe(this@SplashActivity) { profileModel ->
                 startActivity(MainActivity.create(this@SplashActivity, profileModel))
                 finish()
-            })
+            }
 
-            navigateToSignInEvent.observe(this@SplashActivity, {
+            navigateToSignInEvent.observe(this@SplashActivity) {
                 startActivity(Intent(this@SplashActivity, SignInActivity::class.java))
                 finish()
-            })
+            }
         }
 
     }

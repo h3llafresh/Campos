@@ -13,16 +13,36 @@
     <string name="fragment_sign_in_email_input_hint">Email</string>
     <string name="fragment_sign_in_password_input_hint">Password</string>
     <string name="fragment_sign_in_action_sign_in">Sign in</string>
+    <string name="fragment_sign_in_error_user_not_found">Oops! No user found with such credentials. Please, try again</string>
     <string name="fragment_sign_in_sign_up_suggestion">Aren\'t with us yet?\nPress Sign up and join!\nEasy like 1 2 3</string>
     <string name="fragment_sign_in_action_sign_up">Sign up</string>
 
     <!--fragment_sign_up.xml-->
-    <string name="fragment_sign_up_text_tell_us_about_you">Yay!\nWe are <b>Campos</b> - a community of people enjoying sports and hanging out together!\nWhat about <b>you</b>?</string>
+    <string name="fragment_sign_up_text_tell_us_about_you">Yay!\nWe are <b>Campos</b> - a community of people enjoying sports and hanging out together!\nReady to join?</string>
     <string name="fragment_sign_up_input_hint_first_name">First name</string>
     <string name="fragment_sign_up_input_hint_last_name">Last name</string>
-    <string name="fragment_sign_up_input_hint_residence_country">Country of residence</string>
-    <string name="fragment_sign_up_input_hint_residence_city">City of residence</string>
-    <string name="fragment_sign_up_action_next">Next</string>
+    <string name="fragment_sign_up_input_hint_email">Email</string>
+    <string name="fragment_sign_up_input_hint_password">Password</string>
+    <string name="fragment_sign_up_action_join">Join</string>
+    <string name="fragment_sign_up_forgot_password"><u>Forgot password</u></string>
+    <string name="fragment_sign_up_error_empty_first_name">Please enter first name</string>
+    <string name="fragment_sign_up_error_empty_last_name">Please enter last name</string>
+    <string name="fragment_sign_up_error_invalid_email">Invalid email format</string>
+    <string name="fragment_sign_up_error_invalid_password">Password must be longer than 8 symbols and contain at least one lowercase and uppercase character, numeric symbol and special sign</string>
+    <string name="fragment_sign_up_error_sign_up">Oops, we\'ve done our best, but we had an error. Please, try again</string>
+    <string name="fragment_sign_up_error_email_collision">Oops, looks like this email already registered. Please, use another one</string>
+
+    <!--fragment_success_sign_up.xml-->
+    <string name="fragment_success_sign_up_text_account_created">Cheers!\nYour account was successfully created!</string>
+
+    <!--fragment_forgot_password-->
+    <string name="fragment_forgot_password_text_enter_email">Please enter your email, so we can send you recovery message</string>
+    <string name="fragment_forgot_password_hint_recovery_email">Recovery email</string>
+    <string name="fragment_forgot_password_error_email_not_fount">Oops, we can\'t find entered email, please try again with another one</string>
+    <string name="fragment_forgot_password_error_unknown">Oops, there\'s unknown error occurred. Please, try once again</string>
+
+    <!--fragment_success_forgot_password-->
+    <string name="fragment_success_forgot_password_text_message_sent">Recovery message was sent to your email!</string>
 
     <!--fragment_map.xml-->
     <string name="fragment_map__action_filter_desc">Filter button</string>
@@ -76,5 +96,4 @@
     <string name="map_location_denied_dialog__permission_required_message">Oops! Sorry, playgrounds won\'t work without location data. Please provide location access permission in settings</string>
     <string name="qr_confirmation_location_denied_dialog__permission_required_message">Oops! Sorry, QR confirmation won\'t work without location data. Please provide location access permission in settings</string>
     <string name="qr_confirmation_camera_denied_dialog__permission_required_message">Oops! Sorry, QR confirmation won\'t work without camera. Please provide camera access permission in settings</string>
-
 </resources>

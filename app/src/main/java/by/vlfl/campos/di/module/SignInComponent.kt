@@ -1,6 +1,7 @@
 package by.vlfl.campos.di.module
 
-import by.vlfl.campos.presentation.view.authorization.signIn.SignInActivity
+import by.vlfl.campos.presentation.view.authorization.signIn.SignInFragment
+import by.vlfl.campos.presentation.view.authorization.signUp.SignUpFragment
 import dagger.Subcomponent
 
 @Subcomponent
@@ -10,5 +11,6 @@ interface SignInComponent {
         fun build(): SignInComponent
     }
 
-    fun inject(signInActivity: SignInActivity)
+    fun inject(signInFragment: SignInFragment)
+    fun inject(signUpFragment: SignUpFragment)
 }

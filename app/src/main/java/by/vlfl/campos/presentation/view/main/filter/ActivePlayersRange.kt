@@ -9,6 +9,6 @@ class ActivePlayersRange(
     val end: Int
 ) : Parcelable {
     companion object {
-        public val EMPTY = ActivePlayersRange(0, 0)
+        val EMPTY = ActivePlayersRange(0, 0)
     }
 }

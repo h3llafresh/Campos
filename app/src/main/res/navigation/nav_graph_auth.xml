@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_login"
+    app:startDestination="@id/fragment_sign_in">
+
+    <fragment
+        android:id="@+id/fragment_sign_in"
+        android:name="by.vlfl.campos.presentation.view.authorization.signIn.SignInFragment"
+        android:label="SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+
+        <action
+            android:id="@+id/navigate_to_forgotPasswordFragment"
+            app:destination="@id/fragment_forgot_password" />
+
+        <action
+            android:id="@+id/navigate_to_signUpFragment"
+            app:destination="@id/fragment_sign_up" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_sign_up"
+        android:name="by.vlfl.campos.presentation.view.authorization.signUp.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
+
+        <action
+            android:id="@+id/navigate_to_signUpFragment"
+            app:destination="@id/fragment_success_sign_up"
+            app:popUpTo="@id/fragment_sign_up"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_forgot_password"
+        android:name="by.vlfl.campos.presentation.view.authorization.forgotPassword.ForgotPasswordFragment"
+        android:label="ForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password">
+
+        <action
+            android:id="@+id/navigate_to_successForgotPasswordFragment"
+            app:destination="@id/fragment_success_forgot_password"
+            app:popUpTo="@id/fragment_forgot_password"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_success_forgot_password"
+        android:name="by.vlfl.campos.presentation.view.authorization.forgotPassword.success.ForgotPasswordSuccessFragment"
+        android:label="SuccessForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password" />
+
+    <fragment
+        android:id="@+id/fragment_success_sign_up"
+        android:name="by.vlfl.campos.presentation.view.authorization.signUp.success.SuccessSignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_success_sign_up" />
+
+</navigation>

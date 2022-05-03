@@ -9,7 +9,8 @@ import by.vlfl.campos.domain.usecase.GetUserCurrentPlaygroundUseCase
 import by.vlfl.campos.domain.usecase.LeaveCurrentGameUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,19 +32,19 @@ class ProfileViewModel(
 
     init {
         viewModelScope.launch {
-            val userID = FirebaseAuth.getInstance().currentUser?.uid
+            val userID = Firebase.auth.currentUser?.uid
             if (userID != null) {
                 _currentPlayground.emitAll(getUserCurrentPlaygroundUseCase(userID))
             }
         }
     }
 
-    fun getUserName() = FirebaseAuth.getInstance().currentUser?.displayName ?: throw IllegalStateException("No name specified for user")
+    fun getUserName() = Firebase.auth.currentUser?.displayName ?: throw IllegalStateException("No name specified for user")
 
     fun logOut() = _logoutEvent.emit()
 
     fun leaveCurrentGame() {
-        val userID = FirebaseAuth.getInstance().currentUser?.uid
+        val userID = Firebase.auth.currentUser?.uid
         val playgroundID = currentPlayground.replayCache.first()?.id
         if (userID != null && playgroundID != null) {
             viewModelScope.launch {
@@ -61,9 +62,5 @@ class ProfileViewModel(
             require(modelClass == ProfileViewModel::class.java)
             return ProfileViewModel(getUserCurrentPlaygroundUseCase, leaveCurrentGame) as T
         }
-    }
-
-    companion object {
-        private const val CACHED_OBJECTS_NUMBER = 1
     }
 }

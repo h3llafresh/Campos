@@ -9,7 +9,8 @@ import by.vlfl.campos.domain.usecase.RegisterUserDataUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
 import by.vlfl.campos.presentation.view.main.profile.ProfileModel
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ class SplashViewModel(
     private val registerUserDataUseCase: RegisterUserDataUseCase
 ) : ViewModel() {
 
-    private val auth = FirebaseAuth.getInstance()
+    private val auth = Firebase.auth
 
     private val _navigateToMainActivityEvent: SingleLiveEvent<ProfileModel> = SingleLiveEvent()
     val navigateToMainActivityEvent: LiveData<ProfileModel> get() = _navigateToMainActivityEvent

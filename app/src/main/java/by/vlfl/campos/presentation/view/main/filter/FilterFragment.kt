@@ -44,6 +44,11 @@ class FilterFragment : Fragment() {
         setupChipCheckedChangeListeners()
     }
 
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
     private fun setupApplyButtonClickListener() = binding.bApply.setOnClickListener {
         setFragmentResult(
             MapFragment.FILTER_REQUEST_KEY,

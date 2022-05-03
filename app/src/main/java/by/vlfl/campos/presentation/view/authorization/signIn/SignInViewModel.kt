@@ -50,9 +50,7 @@ class SignInViewModel(
         }
     }
 
-    private suspend fun registerUserData(userID: String, userName: String) {
-        registerUserDataUseCase(userID, userName)
-    }
+    private suspend fun registerUserData(userID: String, userName: String) = registerUserDataUseCase(userID, userName)
 
     class Factory @Inject constructor(
         private val getUserProfileDataUseCase: GetUserProfileDataUseCase,

@@ -86,6 +86,11 @@ class QrConfirmationFragment : Fragment() {
         super.onPause()
     }
 
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
     private fun initializeCodeScanner() {
         val scannerView = binding.vQrScanner
         codeScanner = CodeScanner(requireActivity(), scannerView).apply {

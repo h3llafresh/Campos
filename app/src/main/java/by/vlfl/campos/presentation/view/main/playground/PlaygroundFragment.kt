@@ -59,6 +59,12 @@ class PlaygroundFragment : Fragment() {
         observeViewModelEvents()
     }
 
+    override fun onDestroy() {
+        activePlayersAdapter = null
+        _binding = null
+        super.onDestroy()
+    }
+
     private fun setupActivePlayersRecyclerView() {
         activePlayersAdapter = ActivePlayersAdapter()
         with(binding.rvUsersOnPlayground) {

@@ -49,6 +49,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_tell_us_about_you">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/fragment_sign_up_input_hint_first_name"
@@ -65,6 +66,7 @@
                 app:layout_constraintTop_toBottomOf="@id/til_first_name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/fragment_sign_up_input_hint_last_name"
@@ -72,7 +74,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_residence_country"
+                android:id="@+id/til_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -81,30 +83,57 @@
                 app:layout_constraintTop_toBottomOf="@id/til_last_name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/fragment_sign_up_input_hint_residence_country"
-                    android:inputType="textPersonName" />
+                    android:hint="@string/fragment_sign_up_input_hint_email"
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_residence_city"
+                android:id="@+id/til_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_residence_country"
+                app:layout_constraintTop_toBottomOf="@id/til_email"
                 app:layout_constraintVertical_bias="0">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/fragment_sign_up_input_hint_residence_city"
+                    android:hint="@string/fragment_sign_up_input_hint_password"
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/tv_error_email_collision"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                android:text="@string/fragment_sign_up_error_email_collision"
+                android:textColor="@color/red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_password" />
+
+            <TextView
+                android:id="@+id/tv_error_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                android:text="@string/fragment_sign_up_error_sign_up"
+                android:textColor="@color/red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_password" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -115,7 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:elevation="1dp"
-        android:text="@string/fragment_sign_up_action_next"
+        android:text="@string/fragment_sign_up_action_join"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

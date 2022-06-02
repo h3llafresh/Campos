@@ -14,15 +14,15 @@ import androidx.navigation.ui.setupWithNavController
 import by.vlfl.campos.NavGraphMainDirections
 import by.vlfl.campos.R
 import by.vlfl.campos.databinding.ActivityMainBinding
-import by.vlfl.campos.presentation.view.main.profile.ProfileModel
-import by.vlfl.campos.utils.PermissionUtils
+import by.vlfl.campos.presentation.view.main.profile.ProfileUiModel
+import by.vlfl.campos.utils.DefaultPermissionDeniedDialog
 
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
-    private val profileModel by lazy { intent.extras?.getParcelable<ProfileModel>(PROFILE_MODEL_KEY) }
+    private val profileModel by lazy { intent.extras?.getParcelable<ProfileUiModel>(PROFILE_MODEL_KEY) }
 
     private lateinit var mainNavController: NavController
 
@@ -52,38 +52,36 @@ class MainActivity : AppCompatActivity() {
         mainNavController.setGraph(R.navigation.nav_graph_main, intent.extras)
     }
 
-    private fun setupBottomNavigation() {
-        with(binding.mainBottomNav) {
-            setupWithNavController(mainNavController)
+    private fun setupBottomNavigation() = with(binding.mainBottomNav) {
+        setupWithNavController(mainNavController)
 
-            setOnItemReselectedListener {}
+        setOnItemReselectedListener {}
 
-            setOnItemSelectedListener { item ->
-                return@setOnItemSelectedListener when (item.itemId) {
-                    R.id.action_profile -> {
-                        mainNavController.navigate(NavGraphMainDirections.navigateToProfileFragment(profileModel!!))
-                        true
-                    }
-                    R.id.action_map -> {
-                        if (ContextCompat.checkSelfPermission(
-                                this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION
-                            ) == PackageManager.PERMISSION_GRANTED
-                        ) {
-                            mainNavController.navigate(NavGraphMainDirections.navigateToMapFragment())
-                            true
-                        } else {
-                            locationRequestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-                            isNavigationToMapAllowed
-                        }
-                    }
-                    else -> throw NotImplementedError("Unknown bottom menu item ID")
+        setOnItemSelectedListener { item ->
+            return@setOnItemSelectedListener when (item.itemId) {
+                R.id.action_profile -> {
+                    mainNavController.navigate(NavGraphMainDirections.navigateToProfileFragment(profileModel!!))
+                    true
                 }
+                R.id.action_map -> {
+                    if (ContextCompat.checkSelfPermission(
+                            this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        mainNavController.navigate(NavGraphMainDirections.navigateToMapFragment())
+                        true
+                    } else {
+                        locationRequestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                        isNavigationToMapAllowed
+                    }
+                }
+                else -> throw NotImplementedError("Unknown bottom menu item ID")
             }
         }
     }
 
     private fun showMissingPermissionDialog() {
-        PermissionUtils.DefaultPermissionDeniedDialog()
+        DefaultPermissionDeniedDialog()
             .apply { message = getString(R.string.map_location_denied_dialog__permission_required_message) }
             .show(supportFragmentManager, LOCATION_PERMISSION_DENIED_DIALOG_TAG)
     }
@@ -93,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
         const val PROFILE_MODEL_KEY = "model"
 
-        fun create(context: Context, model: ProfileModel): Intent = Intent(context, MainActivity::class.java).apply {
+        fun create(context: Context, model: ProfileUiModel): Intent = Intent(context, MainActivity::class.java).apply {
             putExtra(PROFILE_MODEL_KEY, model)
         }
     }

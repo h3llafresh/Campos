@@ -14,7 +14,7 @@ import androidx.navigation.fragment.navArgs
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentProfileBinding
 import by.vlfl.campos.domain.entity.UserCurrentPlayground
-import by.vlfl.campos.presentation.view.authorization.signIn.SignInActivity
+import by.vlfl.campos.presentation.view.authorization.SignInActivity
 import com.firebase.ui.auth.AuthUI
 import javax.inject.Inject
 
@@ -101,7 +101,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setViewDataFromModel(model: ProfileModel) = with(binding) {
+    private fun setViewDataFromModel(model: ProfileUiModel) = with(binding) {
         tvUserName.text = model.name
         tvUserBirthDate.text = model.birthDate
     }

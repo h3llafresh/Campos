@@ -48,7 +48,7 @@ class PlaygroundsFirebaseRemoteApi @Inject constructor() {
                                 }
                             }
                             val playgroundInfo = playgroundSnapshot.getValue(PlaygroundDto::class.java)
-                                ?.copy(id = playgroundSnapshot.key, players = activePlayers.filter { !it.name.isNullOrEmpty() })
+                                ?.copy(id = playgroundSnapshot.key, playersNumber = activePlayers.filter { !it.name.isNullOrEmpty() }.count())
                             if (playgroundInfo != null) {
                                 playgroundsDataFlow.emit(playgroundInfo)
                                 Log.d("Playgrounds Data", playgroundInfo.toString())

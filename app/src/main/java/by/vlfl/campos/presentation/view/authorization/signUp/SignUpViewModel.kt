@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import by.vlfl.campos.domain.usecase.RegisterUserDataUseCase
+import by.vlfl.campos.domain.usecase.IRegisterUserDataUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
 import kotlinx.coroutines.launch
@@ -13,14 +13,14 @@ import java.util.regex.Pattern
 import javax.inject.Inject
 
 class SignUpViewModel(
-    private val registerUserDataUseCase: RegisterUserDataUseCase
+    private val registerUserDataUseCase: IRegisterUserDataUseCase
 ) : ViewModel() {
 
     private val _emptyFirstNameEvent: SingleLiveEvent<Nothing> = SingleLiveEvent()
-    val invalidFirstNameEvent: LiveData<Nothing> get() = _emptyFirstNameEvent
+    val emptyFirstNameEvent: LiveData<Nothing> get() = _emptyFirstNameEvent
 
     private val _emptyLastNameEvent: SingleLiveEvent<Nothing> = SingleLiveEvent()
-    val invalidLastNameEvent: LiveData<Nothing> get() = _emptyLastNameEvent
+    val emptyLastNameEvent: LiveData<Nothing> get() = _emptyLastNameEvent
 
     private val _invalidEmailEvent: SingleLiveEvent<Nothing> = SingleLiveEvent()
     val invalidEmailEvent: LiveData<Nothing> get() = _invalidEmailEvent
@@ -60,7 +60,7 @@ class SignUpViewModel(
     }
 
     class Factory @Inject constructor(
-        private val registerUserDataUseCase: RegisterUserDataUseCase
+        private val registerUserDataUseCase: IRegisterUserDataUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

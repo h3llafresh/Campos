@@ -19,7 +19,7 @@ import androidx.navigation.fragment.navArgs
 import by.vlfl.campos.R
 import by.vlfl.campos.appComponent
 import by.vlfl.campos.databinding.FragmentQrConfirmationBinding
-import by.vlfl.campos.utils.PermissionUtils
+import by.vlfl.campos.utils.DefaultPermissionDeniedDialog
 import com.budiyev.android.codescanner.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -141,13 +141,13 @@ class QrConfirmationFragment : Fragment() {
     }
 
     private fun showMissingCameraPermissionDialog() {
-        PermissionUtils.DefaultPermissionDeniedDialog()
+        DefaultPermissionDeniedDialog()
             .apply { message = this@QrConfirmationFragment.getString(R.string.qr_confirmation_camera_denied_dialog__permission_required_message) }
             .show(requireActivity().supportFragmentManager, QR_CONFIRMATION_CAMERA_PERMISSION_DENIED_DIALOG_TAG)
     }
 
     private fun showMissingLocationPermissionDialog() {
-        PermissionUtils.DefaultPermissionDeniedDialog()
+        DefaultPermissionDeniedDialog()
             .apply { message = this@QrConfirmationFragment.getString(R.string.qr_confirmation_location_denied_dialog__permission_required_message) }
             .show(requireActivity().supportFragmentManager, QR_CONFIRMATION_LOCATION_PERMISSION_DENIED_DIALOG_TAG)
     }

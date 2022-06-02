@@ -67,12 +67,12 @@ class SignUpFragment : Fragment() {
     }
 
     private fun observeViewModel() = with(viewModel) {
-        invalidFirstNameEvent.observe(viewLifecycleOwner) {
+        emptyFirstNameEvent.observe(viewLifecycleOwner) {
             resetErrors()
             binding.tilFirstName.error = getString(R.string.fragment_sign_up_error_empty_first_name)
         }
 
-        invalidLastNameEvent.observe(viewLifecycleOwner) {
+        emptyLastNameEvent.observe(viewLifecycleOwner) {
             resetErrors()
             binding.tilLastName.error = getString(R.string.fragment_sign_up_error_empty_last_name)
         }

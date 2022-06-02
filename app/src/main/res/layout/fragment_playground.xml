@@ -94,7 +94,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="30dp"
             android:fontFamily="@font/raleway"
-            android:text="There are no active players there at the moment"
+            android:text="@string/fragment_playground_no_active_players_text"
             android:textAlignment="center"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/b_check_in"
@@ -117,7 +117,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:text="@string/fragment_playground_you_are_on_this_playground"/>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/b_check_in"
             style="@style/Button.Secondary"
             android:layout_width="match_parent"

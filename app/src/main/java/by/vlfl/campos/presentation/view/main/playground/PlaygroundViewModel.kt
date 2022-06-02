@@ -6,9 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import by.vlfl.campos.domain.entity.User
 import by.vlfl.campos.domain.entity.UserCurrentPlayground
-import by.vlfl.campos.domain.usecase.CheckInCurrentUserUseCase
-import by.vlfl.campos.domain.usecase.GetActivePlayersUseCase
-import by.vlfl.campos.domain.usecase.GetUserCurrentPlaygroundUseCase
+import by.vlfl.campos.domain.usecase.IGetActivePlayersUseCase
+import by.vlfl.campos.domain.usecase.IGetUserCurrentPlaygroundUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
 import by.vlfl.campos.presentation.view.main.qrConfirmation.QrConfirmationUiModel
@@ -25,9 +24,8 @@ import kotlinx.coroutines.launch
 
 class PlaygroundViewModel(
     val model: PlaygroundUiModel,
-    private val getActivePlayersUseCase: GetActivePlayersUseCase,
-    private val getUserCurrentPlaygroundUseCase: GetUserCurrentPlaygroundUseCase,
-    private val checkInCurrentUserUseCase: CheckInCurrentUserUseCase
+    private val getActivePlayersUseCase: IGetActivePlayersUseCase,
+    private val getUserCurrentPlaygroundUseCase: IGetUserCurrentPlaygroundUseCase
 ) : ViewModel() {
 
     private val _activePlayers = MutableSharedFlow<List<User>>(replay = CACHED_OBJECTS_NUMBER, onBufferOverflow = BufferOverflow.DROP_LATEST)
@@ -56,11 +54,6 @@ class PlaygroundViewModel(
     }
 
     fun openQrConfirmation() {
-//        if (model.id != null && model.name != null && userID != null) {
-//            viewModelScope.launch {
-//                checkInCurrentUserUseCase(userID, model.id, model.name)
-//            }
-//        }
         if (userID != null) _openQrConfirmationEvent.emit(QrConfirmationUiModel(userID))
     }
 
@@ -74,15 +67,14 @@ class PlaygroundViewModel(
 
     class Factory @AssistedInject constructor(
         @Assisted("playgroundModel") private val model: PlaygroundUiModel,
-        private val getActivePlayersUseCase: GetActivePlayersUseCase,
-        private val getUserCurrentPlaygroundUseCase: GetUserCurrentPlaygroundUseCase,
-        private val checkInCurrentUser: CheckInCurrentUserUseCase
+        private val getActivePlayersUseCase: IGetActivePlayersUseCase,
+        private val getUserCurrentPlaygroundUseCase: IGetUserCurrentPlaygroundUseCase
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             require(modelClass == PlaygroundViewModel::class.java)
-            return PlaygroundViewModel(model, getActivePlayersUseCase, getUserCurrentPlaygroundUseCase, checkInCurrentUser) as T
+            return PlaygroundViewModel(model, getActivePlayersUseCase, getUserCurrentPlaygroundUseCase) as T
         }
 
         @AssistedFactory

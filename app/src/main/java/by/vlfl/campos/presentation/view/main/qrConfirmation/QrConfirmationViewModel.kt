@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import by.vlfl.campos.domain.usecase.CheckInCurrentUserUseCase
+import by.vlfl.campos.domain.usecase.ICheckInCurrentUserUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
 import com.google.android.gms.maps.model.LatLng
@@ -17,7 +17,7 @@ import kotlin.math.abs
 
 class QrConfirmationViewModel(
     val model: QrConfirmationUiModel,
-    private val checkInCurrentUserUseCase: CheckInCurrentUserUseCase
+    private val checkInCurrentUserUseCase: ICheckInCurrentUserUseCase
 ) : ViewModel() {
 
     private val _confirmationResultEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
@@ -49,13 +49,13 @@ class QrConfirmationViewModel(
         )
     }
 
-    private fun compareUserAndPlaygroundCoordinates(userCoordinate: Double, playgroundCoordinate: Double): Boolean {
-        return abs(userCoordinate - playgroundCoordinate) < 0.5
-    }
+    private fun compareUserAndPlaygroundCoordinates(userCoordinate: Double, playgroundCoordinate: Double): Boolean =
+        abs(userCoordinate - playgroundCoordinate) < MAX_DISTANCE_BETWEEN_USER_AND_PLAYGROUND_DIFF
+
 
     class Factory @AssistedInject constructor(
         @Assisted("qrConfirmationUiModel") private val model: QrConfirmationUiModel,
-        private val checkInCurrentUserUseCase: CheckInCurrentUserUseCase
+        private val checkInCurrentUserUseCase: ICheckInCurrentUserUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -67,5 +67,9 @@ class QrConfirmationViewModel(
         interface AssistedInjectFactory {
             fun create(@Assisted("qrConfirmationUiModel") model: QrConfirmationUiModel): Factory
         }
+    }
+
+    private companion object {
+        private const val MAX_DISTANCE_BETWEEN_USER_AND_PLAYGROUND_DIFF = 0.000025
     }
 }

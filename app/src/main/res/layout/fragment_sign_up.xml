@@ -137,7 +137,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/b_sign_up"
         style="@style/Button.Secondary"
         android:layout_width="wrap_content"

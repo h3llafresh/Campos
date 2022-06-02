@@ -1,6 +1,6 @@
 package by.vlfl.campos.data.repository
 
-import by.vlfl.campos.data.remote.firebase.user.UserRemoteDataSource
+import by.vlfl.campos.data.remote.firebase.user.IUserRemoteDataSource
 import by.vlfl.campos.data.remote.firebase.user.toDomainModel
 import by.vlfl.campos.domain.entity.User
 import by.vlfl.campos.domain.entity.UserCurrentPlayground
@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepository @Inject constructor(private val userRemoteDataSource: UserRemoteDataSource) : IUserRepository {
+class UserRepository @Inject constructor(private val userRemoteDataSource: IUserRemoteDataSource) : IUserRepository {
     override suspend fun getUserData(userID: String): User? =
         userRemoteDataSource.getUserData(userID)?.toDomainModel()
 

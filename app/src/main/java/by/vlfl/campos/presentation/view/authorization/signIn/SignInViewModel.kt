@@ -4,24 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import by.vlfl.campos.domain.usecase.GetUserProfileDataUseCase
-import by.vlfl.campos.domain.usecase.RegisterUserDataUseCase
+import by.vlfl.campos.domain.usecase.IGetUserProfileDataUseCase
+import by.vlfl.campos.domain.usecase.IRegisterUserDataUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
-import by.vlfl.campos.presentation.view.main.profile.ProfileModel
+import by.vlfl.campos.presentation.view.main.profile.ProfileUiModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SignInViewModel(
-    private val getUserProfileDataUseCase: GetUserProfileDataUseCase,
-    private val registerUserDataUseCase: RegisterUserDataUseCase
+    private val getUserProfileDataUseCase: IGetUserProfileDataUseCase,
+    private val registerUserDataUseCase: IRegisterUserDataUseCase
 ) : ViewModel() {
 
     private val auth = FirebaseAuth.getInstance()
 
-    private val _navigateToMainActivityEvent: SingleLiveEvent<ProfileModel> = SingleLiveEvent()
-    val navigateToMainActivityEvent: LiveData<ProfileModel> get() = _navigateToMainActivityEvent
+    private val _navigateToMainActivityEvent: SingleLiveEvent<ProfileUiModel> = SingleLiveEvent()
+    val navigateToMainActivityEvent: LiveData<ProfileUiModel> get() = _navigateToMainActivityEvent
 
     fun checkUserAuthorization() {
         val currentUser = auth.currentUser
@@ -36,7 +36,7 @@ class SignInViewModel(
             if (userProfileData != null) {
                 _navigateToMainActivityEvent.emit(
                     with(userProfileData) {
-                        ProfileModel(
+                        ProfileUiModel(
                             id = id,
                             name = name,
                             birthDate = birthDate
@@ -53,8 +53,8 @@ class SignInViewModel(
     private suspend fun registerUserData(userID: String, userName: String) = registerUserDataUseCase(userID, userName)
 
     class Factory @Inject constructor(
-        private val getUserProfileDataUseCase: GetUserProfileDataUseCase,
-        private val registerUserDataUseCase: RegisterUserDataUseCase
+        private val getUserProfileDataUseCase: IGetUserProfileDataUseCase,
+        private val registerUserDataUseCase: IRegisterUserDataUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

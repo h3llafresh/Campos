@@ -1,4 +1,4 @@
-package by.vlfl.campos.presentation.view.authorization.signIn
+package by.vlfl.campos.presentation.view.authorization
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

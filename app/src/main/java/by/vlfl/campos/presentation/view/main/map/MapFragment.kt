@@ -1,7 +1,6 @@
 package by.vlfl.campos.presentation.view.main.map
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -74,7 +73,7 @@ class MapFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeVm()
+        observeViewModelEvents()
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -209,13 +208,12 @@ class MapFragment : Fragment() {
     private fun checkLocationPermissionGranted(): Boolean =
         ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
-    private fun observeVm() {
+    private fun observeViewModelEvents() {
         viewModel.datasetUpdatedEvent.observe(viewLifecycleOwner) {
             googleMap.clear()
         }
     }
 
-    @SuppressLint("MissingPermission")
     private fun enableCurrentLocation() {
         if (checkLocationPermissionGranted()) {
             googleMap.isMyLocationEnabled = true
@@ -223,7 +221,6 @@ class MapFragment : Fragment() {
         }
     }
 
-    @SuppressLint("MissingPermission")
     private fun showDeviceLocation() {
         try {
             if (checkLocationPermissionGranted()) {
@@ -239,7 +236,6 @@ class MapFragment : Fragment() {
         }
     }
 
-    @SuppressLint("MissingPermission")
     private fun showAnimatedDeviceLocation() {
         try {
             if (checkLocationPermissionGranted()) {

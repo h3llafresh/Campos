@@ -12,7 +12,9 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class PlaygroundRepository @Inject constructor(private val playgroundRemoteDataSource: IPlaygroundRemoteDataSource) : IPlaygroundRepository {
+class PlaygroundRepository @Inject constructor(
+    private val playgroundRemoteDataSource: IPlaygroundRemoteDataSource
+    ) : IPlaygroundRepository {
 
     override suspend fun getPlaygrounds(): Flow<Playground> =
         playgroundRemoteDataSource.getPlaygrounds().map {
@@ -20,7 +22,8 @@ class PlaygroundRepository @Inject constructor(private val playgroundRemoteDataS
         }.flowOn(Dispatchers.Default)
 
     override suspend fun getActivePlayers(playgroundID: String): Flow<List<User>> =
-        playgroundRemoteDataSource.getActivePlayers(playgroundID).map { activePlayersDto ->
+        playgroundRemoteDataSource.getActivePlayers(playgroundID)
+            .map { activePlayersDto ->
             activePlayersDto.map {
                 it.toDomainModel()
             }

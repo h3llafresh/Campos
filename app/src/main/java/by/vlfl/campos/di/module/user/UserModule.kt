@@ -1,7 +1,7 @@
 package by.vlfl.campos.di.module.user
 
 import by.vlfl.campos.domain.repostitory.IUserRepository
-import by.vlfl.campos.domain.usecase.*
+import by.vlfl.campos.domain.usecase.implementation.*
 import dagger.Module
 import dagger.Provides
 

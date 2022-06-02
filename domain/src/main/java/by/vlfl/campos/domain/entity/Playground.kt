@@ -5,6 +5,6 @@ data class Playground(
     val name: String,
     val category: SportCategory,
     val address: String,
-    val activePlayers: List<User>,
+    val activePlayersNumber: Int,
     val coordinates: Coordinates
 )

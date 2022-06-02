@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import by.vlfl.campos.domain.entity.UserCurrentPlayground
-import by.vlfl.campos.domain.usecase.GetUserCurrentPlaygroundUseCase
-import by.vlfl.campos.domain.usecase.LeaveCurrentGameUseCase
+import by.vlfl.campos.domain.usecase.IGetUserCurrentPlaygroundUseCase
+import by.vlfl.campos.domain.usecase.ILeaveCurrentGameUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
 import com.google.firebase.auth.ktx.auth
@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ProfileViewModel(
-    getUserCurrentPlaygroundUseCase: GetUserCurrentPlaygroundUseCase,
-    private val leaveCurrentGameUseCase: LeaveCurrentGameUseCase
+    getUserCurrentPlaygroundUseCase: IGetUserCurrentPlaygroundUseCase,
+    private val leaveCurrentGameUseCase: ILeaveCurrentGameUseCase
 ) : ViewModel() {
 
     private val _logoutEvent: SingleLiveEvent<Nothing> = SingleLiveEvent()
@@ -54,8 +54,8 @@ class ProfileViewModel(
     }
 
     class Factory @Inject constructor(
-        private val getUserCurrentPlaygroundUseCase: GetUserCurrentPlaygroundUseCase,
-        private val leaveCurrentGame: LeaveCurrentGameUseCase,
+        private val getUserCurrentPlaygroundUseCase: IGetUserCurrentPlaygroundUseCase,
+        private val leaveCurrentGame: ILeaveCurrentGameUseCase,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

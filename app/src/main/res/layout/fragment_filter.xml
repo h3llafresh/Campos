@@ -171,7 +171,7 @@
 
     </com.google.android.material.chip.ChipGroup>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/b_apply"
         style="@style/Button.Primary"
         android:layout_width="0dp"

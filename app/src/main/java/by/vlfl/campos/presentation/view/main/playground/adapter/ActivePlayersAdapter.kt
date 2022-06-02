@@ -11,7 +11,7 @@ class ActivePlayersAdapter(
     private val activePlayers: MutableList<User> = mutableListOf()
 ) : RecyclerView.Adapter<ActivePlayerViewHolder>() {
 
-    override fun getItemCount(): Int = activePlayers.count()
+    override fun getItemCount() = activePlayers.count()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivePlayerViewHolder {
         val binding = ActivePlayerItemBinding.inflate(

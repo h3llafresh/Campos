@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import by.vlfl.campos.domain.entity.Playground
-import by.vlfl.campos.domain.usecase.GetPlaygroundsUseCase
+import by.vlfl.campos.domain.usecase.IGetPlaygroundsUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.presentation.view.main.filter.ActivePlayersRange
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MapViewModel(
-    private val getPlaygroundsUseCase: GetPlaygroundsUseCase
+    private val getPlaygroundsUseCase: IGetPlaygroundsUseCase
 ) : ViewModel() {
     private var appliedActivePlayersFilters: List<ActivePlayersRange> = mutableListOf()
     private var appliedPlaygroundCategoryFilters: List<String> = mutableListOf()
@@ -52,7 +52,7 @@ class MapViewModel(
     private fun filterPlaygroundByActivePlayers(playground: Playground, activePlayersFilter: List<ActivePlayersRange>): Boolean {
         if (activePlayersFilter.isEmpty()) return true
         val activePlayersFilterResult = activePlayersFilter.fold(false) { accumulator, it ->
-            accumulator || playground.activePlayers.count() in it.start..it.end
+            accumulator || playground.activePlayersNumber in it.start..it.end
         }
         return activePlayersFilterResult
     }
@@ -63,7 +63,7 @@ class MapViewModel(
     }
 
     class Factory @Inject constructor(
-        private val getPlaygroundsUseCase: GetPlaygroundsUseCase,
+        private val getPlaygroundsUseCase: IGetPlaygroundsUseCase,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

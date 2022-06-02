@@ -18,6 +18,13 @@ import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
+private const val USER_NAME_MAP_KEY = "name"
+private const val PLAYGROUND_NAME_MAP_KEY = "name"
+private const val USER_CURRENT_PLAYGROUND_DATABASE_PATH_PART = "currentPlayground"
+private const val USER_NAME_DATABASE_PATH_PART = "name"
+private const val PLAYGROUND_ACTIVE_PLAYERS_DATABASE_PATH_PART = "activePlayers"
+private const val PLAYGROUND_NAME_DATABASE_PATH_PART = "name"
+
 @Singleton
 class UsersFirebaseRemoteApi @Inject constructor() {
     @Singleton
@@ -41,24 +48,22 @@ class UsersFirebaseRemoteApi @Inject constructor() {
 
     suspend fun registerUserData(userID: String, userName: String) {
         return withContext(Dispatchers.IO) {
-            val userNameMap = mapOf("name" to userName)
+            val userNameMap = mapOf(USER_NAME_MAP_KEY to userName)
             usersRemoteReference.updateChildren(mapOf(userID to userNameMap))
         }
     }
 
-    suspend fun checkInCurrentUser(userID: String, playgroundID: String, playgroundName: String) {
-        withContext(Dispatchers.IO) {
-            val playgroundDataMap = mapOf("name" to playgroundName)
-            usersRemoteReference.child(userID).child("currentPlayground").setValue(mapOf(playgroundID to playgroundDataMap))
-            val user = getUserData(userID)
+    suspend fun checkInCurrentUser(userID: String, playgroundID: String, playgroundName: String) = withContext(Dispatchers.IO) {
+        val playgroundDataMap = mapOf(PLAYGROUND_NAME_MAP_KEY to playgroundName)
+        usersRemoteReference.child(userID).child(USER_CURRENT_PLAYGROUND_DATABASE_PATH_PART).setValue(mapOf(playgroundID to playgroundDataMap))
+        val user = getUserData(userID)
 
-            user ?: throw (IllegalStateException("User with such ID wasn't retrieved"))
+        user ?: throw (IllegalStateException("User with such ID wasn't retrieved"))
 
-            val userDataMap = mapOf("name" to user.name)
-            playgroundsRemoteReference.child(playgroundID).child("activePlayers").updateChildren(
-                mapOf(userID to userDataMap)
-            )
-        }
+        val userDataMap = mapOf(USER_NAME_MAP_KEY to user.name)
+        playgroundsRemoteReference.child(playgroundID).child(PLAYGROUND_ACTIVE_PLAYERS_DATABASE_PATH_PART).updateChildren(
+            mapOf(userID to userDataMap)
+        )
     }
 
     fun subscribeToUserCurrentPlayground(userID: String): Flow<UserCurrentPlaygroundDto?> {
@@ -67,7 +72,7 @@ class UsersFirebaseRemoteApi @Inject constructor() {
     }
 
     private fun setUserPlaygroundDataChangeListener(userID: String) {
-        usersRemoteReference.child(userID).child("currentPlayground").addValueEventListener(
+        usersRemoteReference.child(userID).child(USER_CURRENT_PLAYGROUND_DATABASE_PATH_PART).addValueEventListener(
             object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     CoroutineScope(Dispatchers.IO).launch {
@@ -88,7 +93,17 @@ class UsersFirebaseRemoteApi @Inject constructor() {
     }
 
     fun leaveCurrentGame(userID: String, playgroundID: String) {
-        usersRemoteReference.child(userID).child("currentPlayground").child(playgroundID).child("name").setValue("")
-        playgroundsRemoteReference.child(playgroundID).child("activePlayers").child(userID).child("name").setValue("")
+        usersRemoteReference
+            .child(userID)
+            .child(USER_CURRENT_PLAYGROUND_DATABASE_PATH_PART)
+            .child(playgroundID)
+            .child(USER_NAME_DATABASE_PATH_PART)
+            .setValue("")
+        playgroundsRemoteReference
+            .child(playgroundID)
+            .child(PLAYGROUND_ACTIVE_PLAYERS_DATABASE_PATH_PART)
+            .child(userID)
+            .child(PLAYGROUND_NAME_DATABASE_PATH_PART)
+            .setValue("")
     }
 }

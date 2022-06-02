@@ -12,8 +12,9 @@ class UserRemoteDataSource @Inject constructor(private val usersFirebaseRemoteAp
         usersFirebaseRemoteApi.registerUserData(userID, userName)
     }
 
-    override suspend fun checkInCurrentUser(userID: String, playgroundID: String, playgroundName: String) =
+    override suspend fun checkInCurrentUser(userID: String, playgroundID: String, playgroundName: String) {
         usersFirebaseRemoteApi.checkInCurrentUser(userID, playgroundID, playgroundName)
+    }
 
     override suspend fun getUserCurrentPlayground(userID: String): Flow<UserCurrentPlaygroundDto?> =
         usersFirebaseRemoteApi.subscribeToUserCurrentPlayground(userID)

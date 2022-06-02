@@ -102,7 +102,7 @@ class PlaygroundFragment : Fragment() {
                 val filteredPlayers = activePlayers.filter { it.name != "" }
                 activePlayersAdapter?.replace(filteredPlayers)
 
-                setEmptyPlaygroundViews(filteredPlayers.isNullOrEmpty())
+                setEmptyPlaygroundViews(filteredPlayers.isEmpty())
             }
         }
         lifecycleScope.launchWhenStarted {

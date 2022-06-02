@@ -1,8 +1,8 @@
 package by.vlfl.campos.di.module.playground
 
 import by.vlfl.campos.domain.repostitory.IPlaygroundRepository
-import by.vlfl.campos.domain.usecase.GetActivePlayersUseCase
-import by.vlfl.campos.domain.usecase.GetPlaygroundsUseCase
+import by.vlfl.campos.domain.usecase.implementation.GetActivePlayersUseCase
+import by.vlfl.campos.domain.usecase.implementation.GetPlaygroundsUseCase
 import dagger.Module
 import dagger.Provides
 

@@ -1,7 +1,5 @@
 package by.vlfl.campos.data.remote.firebase.playground
 
-import by.vlfl.campos.data.remote.firebase.user.UserDto
-import by.vlfl.campos.data.remote.firebase.user.toDomainModel
 import by.vlfl.campos.domain.entity.Coordinates
 import by.vlfl.campos.domain.entity.Playground
 import by.vlfl.campos.domain.entity.SportCategory
@@ -17,7 +15,7 @@ data class PlaygroundDto(
     val name: String? = "",
     val category: String? = "",
     val address: String? = "",
-    val players: List<UserDto> = listOf(),
+    val playersNumber: Int = 0,
     val coordinates: Coordinates? = null
 )
 
@@ -26,9 +24,7 @@ fun PlaygroundDto.toDomainModel() = Playground(
     name = checkNotNull(this.name),
     category = mapDtoCategoryToDomainModel(this.category),
     address = checkNotNull(this.address),
-    activePlayers = this.players.map { userDto ->
-        userDto.toDomainModel()
-    },
+    activePlayersNumber = this.playersNumber,
     coordinates = checkNotNull(this.coordinates)
 )
 

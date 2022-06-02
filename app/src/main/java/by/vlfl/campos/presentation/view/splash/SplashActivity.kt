@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import by.vlfl.campos.appComponent
-import by.vlfl.campos.presentation.view.authorization.signIn.SignInActivity
+import by.vlfl.campos.presentation.view.authorization.SignInActivity
 import by.vlfl.campos.presentation.view.main.MainActivity
 import javax.inject.Inject
 
@@ -27,18 +27,16 @@ class SplashActivity : AppCompatActivity() {
         viewModel.checkUserAuthorization()
     }
 
-    private fun observeViewModel() {
-        with (viewModel) {
-            navigateToMainActivityEvent.observe(this@SplashActivity) { profileModel ->
-                startActivity(MainActivity.create(this@SplashActivity, profileModel))
-                finish()
-            }
-
-            navigateToSignInEvent.observe(this@SplashActivity) {
-                startActivity(Intent(this@SplashActivity, SignInActivity::class.java))
-                finish()
-            }
+    private fun observeViewModel() = with(viewModel) {
+        navigateToMainActivityEvent.observe(this@SplashActivity) { profileModel ->
+            startActivity(MainActivity.create(this@SplashActivity, profileModel))
+            finish()
         }
 
+        navigateToSignInEvent.observe(this@SplashActivity) {
+            startActivity(Intent(this@SplashActivity, SignInActivity::class.java))
+            finish()
+        }
     }
+
 }

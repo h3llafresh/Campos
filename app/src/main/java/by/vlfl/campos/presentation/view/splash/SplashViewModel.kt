@@ -4,25 +4,25 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import by.vlfl.campos.domain.usecase.GetUserProfileDataUseCase
-import by.vlfl.campos.domain.usecase.RegisterUserDataUseCase
+import by.vlfl.campos.domain.usecase.IGetUserProfileDataUseCase
+import by.vlfl.campos.domain.usecase.IRegisterUserDataUseCase
 import by.vlfl.campos.lifecycle.SingleLiveEvent
 import by.vlfl.campos.lifecycle.emit
-import by.vlfl.campos.presentation.view.main.profile.ProfileModel
+import by.vlfl.campos.presentation.view.main.profile.ProfileUiModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SplashViewModel(
-    private val getUserProfileDataUseCase: GetUserProfileDataUseCase,
-    private val registerUserDataUseCase: RegisterUserDataUseCase
+    private val getUserProfileDataUseCase: IGetUserProfileDataUseCase,
+    private val registerUserDataUseCase: IRegisterUserDataUseCase
 ) : ViewModel() {
 
     private val auth = Firebase.auth
 
-    private val _navigateToMainActivityEvent: SingleLiveEvent<ProfileModel> = SingleLiveEvent()
-    val navigateToMainActivityEvent: LiveData<ProfileModel> get() = _navigateToMainActivityEvent
+    private val _navigateToMainActivityEvent: SingleLiveEvent<ProfileUiModel> = SingleLiveEvent()
+    val navigateToMainActivityEvent: LiveData<ProfileUiModel> get() = _navigateToMainActivityEvent
 
     private val _navigateToSignInEvent: SingleLiveEvent<Nothing> = SingleLiveEvent()
     val navigateToSignInEvent: LiveData<Nothing> get() = _navigateToSignInEvent
@@ -42,7 +42,7 @@ class SplashViewModel(
             if (userProfileData != null) {
                 _navigateToMainActivityEvent.emit(
                     with(userProfileData) {
-                        ProfileModel(
+                        ProfileUiModel(
                             id = id,
                             name = name,
                             birthDate = birthDate
@@ -61,8 +61,8 @@ class SplashViewModel(
     }
 
     class Factory @Inject constructor(
-        private val getUserProfileDataUseCase: GetUserProfileDataUseCase,
-        private val registerUserDataUseCase: RegisterUserDataUseCase
+        private val getUserProfileDataUseCase: IGetUserProfileDataUseCase,
+        private val registerUserDataUseCase: IRegisterUserDataUseCase
         ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

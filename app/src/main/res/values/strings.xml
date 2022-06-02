@@ -70,6 +70,7 @@
     <!--fragment_playground.xml-->
     <string name="fragment_playground_button_in_label">I\'m in !</string>
     <string name="fragment_playground_currently_there_label">Currently there</string>
+    <string name="fragment_playground_no_active_players_text">There are no active players there at the moment</string>
     <string name="fragment_playground_you_are_on_this_playground"><u>YAAAY! You are playing right here at the moment! Enjoy the game!</u></string>
     <string name="fragment_playground_you_are_on_another_playground"><u>You are playing on %s at the moment! To join this game, please, end another one</u></string>
 
